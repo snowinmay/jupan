@@ -1,0 +1,147 @@
+<view class="top_steps">
+      <van-steps steps="{{ steps }}" active="{{ active }}" active-color="#000000" />
+</view>
+<view style="height:66.8px"></view>
+ <view class="show_contain show_want" wx:if="{{kindid!=2}}">
+      <view class="list_content">
+            <view  data-type="0"  bindtap="search">
+                  <view class="list_title2">
+                  <span class="title_icon">我有</span>
+                        {{selectShow.showName?selectShow.showName:"请选择演出"}}
+                  </view>
+                  <image class="search_ico" src="/images/right.png"></image>
+            </view>
+            <view class="list_item">{{selectShow.venueName}}</view>
+            <view class="list_item">{{selectShow.showDate}}</view>
+      </view>
+</view>
+<view class="show_contain show_change" wx:if="{{kindid!=0}}">
+      <view class="list_content">
+            <view  data-type="2"  bindtap="search">
+                  <view class="list_title2">
+                  <span class="title_icon2">我想要</span>
+                        {{selectShow2.showName?selectShow2.showName:"请选择演出"}}
+                  </view>
+                  <image class="search_ico" src="/images/right.png"></image>
+            </view>
+            <view class="list_item">{{selectShow2.venueName}}</view>
+            <view class="list_item">{{selectShow2.showDate}}</view>
+      </view>
+</view>
+<!--步骤一-->
+<van-transition show="{{ show_a }}" name="fade-right" custom-class="block" duration="{{entime}}">
+      <view class="a_contain">
+            <view class="b_card">
+                  <view class="public_type list_content">
+                        <view class="b_name">发布类别</view>
+                        <block>
+                        <radio-group class="kind-group" bindchange="kindChange">
+                              <label class="b_radio {{item.check?'selected':''}}" wx:for="{{kind}}" wx:key="id">
+                                    <radio color="#07c160" value="{{item.id}}" checked="{{item.check}}" />{{item.name}}
+                              </label>
+                        </radio-group>
+                        </block>
+                  </view>
+            </view>
+           
+            <view class="a_sao">
+                  <button class="shadow" bindtap="select">补充详细信息</button>
+            </view>
+            <!--列表显示-->
+            <!--<image lazy-load class="list_poster" src="{{item.bookinfo.pic}}"></image>-->
+            <view hidden="{{iscard}}">
+                  <block wx:if="{{showList.length>0}}">
+                        <block wx:for="{{showList}}" wx:key="showOID">
+                              <view class="list_box" bindtap="select" data-item='{{item}}' data-id="{{item.showOID}}">
+                                    
+                                    <view class="list_content">
+                                          <view class="list_word">
+                                                <view class="list_title">
+                                                      <span>{{item.arr[0]}}</span>
+                                                      <span class="{{item.highlight?'highlight':''}}">{{item.keyword}}</span>
+                                                      <span>{{item.arr[1]}}</span>
+                                                </view>
+                                          </view>
+                                          <view class="list_between">
+                                                <view class="list_author">{{item.venueName}}</view>
+                                                <view class="list_time">{{item.showDate}}
+                                                </view>
+                                          </view>
+                                    </view>
+                              </view>
+                        </block>
+                  </block>
+            </view>
+            <!--无内容显示-->
+            <view class="nocontent" wx:if="{{showList.length==0}}">
+                  <image lazy-load src="/images/blank.png"></image>
+                  <view class="blank_text">这里空空如也~</view>
+            </view>
+      </view>
+</van-transition>
+<!--步骤二-->
+<van-transition show="{{ show_b }}" name="fade-right" custom-class="block" duration="{{entime}}">
+      <view class="b_ccontain">
+            <view class="b_card">
+                  <view class="b_bar">
+                        <view class="b_name">发布类别</view>
+                        <radio-group class="kind-group" bindchange="kindChange">
+                              <label class="b_radio" wx:for="{{kind}}" wx:key="id">
+                                    <radio color="#07c160" value="{{item.id}}" checked="{{item.check}}" />{{item.name}}
+                              </label>
+                        </radio-group>
+                  </view>
+                  <view class="b_border"></view>
+                  <view class="b_bar">
+                        <view class="b_name">演出场次</view>
+                        <picker range="{{selectShow.sessions}}" range-key="sessionName" value="{{cids}}" bindchange="choCollege">
+                              <view class="b_picker">
+                                    <block wx:if="{{cids!==-1}}">当前选择：{{selectShow.sessions[cids].sessionName}}</block>
+                                    <block wx:if="{{cids==-1}}">请选择场次</block>
+                                    <image class="right" src="/images/right.png" />
+                              </view>
+                        </picker>
+                  </view>
+                  <view class="b_border"></view>
+                  <view class="b_bar">
+                        <view class="b_name">演出票面</view>
+                        <picker range="{{selectShow.seatplans}}" value="{{cids}}" bindchange="choCollege">
+                              <view class="b_picker">
+                                    <block wx:if="{{cids!==-1}}">当前选择：{{selectShow.seatplans[cids]}}票面</block>
+                                    <block wx:if="{{cids==-1}}">请选择票面</block>
+                                    <image class="right" src="/images/right.png" />
+                              </view>
+                        </picker>
+                  </view>
+                  <view class="b_border"></view>
+                  <view class="b_bar">
+                        <view class="name">备注信息</view>
+                        <view class="b_nobi">※ 非必填</view>
+                  </view>
+                  <view class="b_notes">
+                        <view class="b_text">
+                              <textarea value="{{notes}}" bindinput="noteInput" maxlength="50" placeholder="请随便说点相关的"></textarea>
+                              <view class="b_less">{{note_counts}}/50</view>
+                        </view>
+                  </view>
+                  <view class="b_bar">
+                        <view class="name">发布时长(天)</view>
+                        <van-stepper bind:change="duraChange" value="{{dura}}" min="1" max="50" />
+                  </view>
+                  <view class="b_tips">
+                        <text>* </text>此时长内您的发布信息将会展示给所有同学，超时后您只需去个人中心处擦亮即可再次展示</view>
+            </view>
+            <view class="b_publish" bindtap="check_pub">马上发布
+            </view>
+      </view>
+</van-transition>
+<!--步骤三-->
+<van-transition show="{{ show_c }}" name="fade-right" custom-class="block" duration="{{entime}}">
+      <view class="c_contain" style="height:{{systeminfo.windowHeight-66.8}}px">
+            <image class="c_success" src="/images/success.png"></image>
+            <view class="c_title">恭喜您 发布成功</view>
+            <view class="c_des">订单的实时状态将通过短信和邮箱通知您</view>
+            <view class="c_see" bindtap="detail" >查看详情</view>
+            <view class="c_again shadow" bindtap="initial">再来一本</view>
+      </view>
+</van-transition>

@@ -1,0 +1,30 @@
+<view class="top_contain">
+      <view class="des_contain">
+            <view class="name">爱看话剧</view>
+            <view class="sign">走进剧院，走近剧院</view>
+      </view>
+      <view class="avator_box">
+            <image class="avator" src="/images/tou.jpg"></image>
+      </view>
+</view>
+<view class="contain">
+      <view class="title">程序简介</view>
+      <view class="description">
+            <text space="emsp" decode="{{ true }}">{{des}}</text>
+      </view>
+      <view class="title">联系方式</view>
+      <view class="description">
+            <view class="tip" bindtap="copy" data-copy="@爱看话剧社" data-name="微博">
+                  <view>微  博</view>:
+                  <text>@爱看话剧社</text>
+            </view>
+            <view class="tip" bindtap="copy" data-copy="爱看话剧" data-name="公众号">
+                  <view>公众号</view>:
+                  <text>爱看话剧</text>
+            </view>
+            <view class="tip" bindtap="copy" data-copy="stagehz" data-name="小编微信">
+                  <view>小编wx</view>:
+                  <text>stagehz</text>
+            </view>
+      </view>
+</view>
