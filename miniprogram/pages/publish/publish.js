@@ -108,6 +108,7 @@ Page({
             })
       },
       confirm() {
+            //
             let that = this;
             let isbn = that.data.isbn;
             // if (!(/978[0-9]{10}/.test(isbn))) {
