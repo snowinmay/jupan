@@ -15,29 +15,8 @@ var data = {
       //默认启动页背景图，防止请求失败完全空白 
       //可以是网络地址，本地文件路径要填绝对位置
       bgurl: '/images/startBg.jpg',
-      //校区
-      campus: [{
-                  name: '重大A区',
-                  id: 0
-            },
-            {
-                  name: '重大B区',
-                  id: 1
-            },
-            {
-                  name: '重大C区',
-                  id: 2
-            },
-            {
-                  name: '虎溪校区',
-                  id: 3
-            },
-      ],
       //配置学院，建议不要添加太多，不然前端不好看
-      college: [{
-                  name: '求票',
-                  id: -1
-            },
+      college: [
             {
                   name: '转票',
                   id: 0

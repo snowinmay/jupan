@@ -41,19 +41,20 @@
             <block wx:if="{{newlist.length==0}}">
                   <view class="nosearch">暂无相关推荐</view>
             </block>
+            <!--列表显示-->
             <block wx:if="{{newlist.length>0}}">
                   <block wx:for="{{newlist}}" wx:key="_id">
                         <view class="list_box" bindtap="detail" data-id="{{item._id}}">
-                              <image class="list_poster" src="{{item.bookinfo.pic}}"></image>
+                              
                               <view class="list_content">
                                     <view class="list_word">
-                                          <view class="list_title text-cut">{{item.bookinfo.title}}
+                                          <view class="list_title"><span class="title_icon">我有</span>{{item.myTicketInfo.showName}},票面：<span class="list_oprice">￥{{item.myTicketInfo.originalPrice}} X {{item.quantity}}</span>
                                           </view>
-                                          <view class="list_author text-cut">{{item.bookinfo.author}}
+                                          <view class="list_author text-cut">场次：{{item.myTicketInfo.sessionName}}{{item.myTicketInfo.venueName}}
                                           </view>
                                     </view>
                                     <view class="list_between">
-                                          <view class="list_price">￥{{item.price}}.00元</view>
+                                          <view class="list_price">售价：￥{{item.price}}<span class="list_pay"> 实付：￥{{item.myTicketInfo.pay}}</span></view>
                                           <view class="list_time">{{morejs.timelog(item.creat )}}发布
                                           </view>
                                     </view>

@@ -23,55 +23,28 @@ Page({
                         desc: '发布成功'
                   },
             ],
-           list: [{
-                  showDate: "2021.05.13-2021.05.16",
-                  showName: "【上海站】「陈佩斯/杨立新」舞台喜剧《戏台》",
-                  showOID: "5f4715b6c756b11e5c3416d4",
-                  venueName: "上汽·上海文化广场"
-            },{
-                  showDate: "2021.05.13-2021.05.16",
-                  showName: "【上海站】「陈佩斯/杨立新」舞台喜剧《戏台》",
-                  showOID: "5f4715b6c756b11e5c3416d4",
-                  venueName: "上汽·上海文化广场"
-            }],
       },
       //恢复初始态
       initial() {
             let that = this;
             that.setData({
                   dura: 30,
-                  price: 15,
-                  place: '',
-                  chooseDelivery: 0,
-                  cids: '-1', //学院选择的默认值
-                  isbn: '',
+                  price: '',//售价
+                  quantity: 1,//数量
                   show_a: true,
                   show_b: false,
                   show_c: false,
                   active: 0,
-                  chooseCollege: false,
                   note_counts: 0,
                   notes: '',
                   kindid: 0,
+                  selectShow:{},
                   kind: [{
-                        name: '出票',
+                        name: '转票',
                         id: 0,
                         check: true,
                   }, {
                         name: '换票',
-                        id: 1,
-                        check: false
-                  }, {
-                        name: '求票',
-                        id: 2,
-                        check: false
-                  }],
-                  delivery: [{
-                        name: '自提',
-                        id: 0,
-                        check: true,
-                  }, {
-                        name: '帮送',
                         id: 1,
                         check: false
                   }],
@@ -79,33 +52,6 @@ Page({
       },
       onLoad() {
             this.initial();
-      },
-      //手动输入isbn
-      isbnInput(e) {
-            this.data.isbn = e.detail.value;
-      },
-      //打开摄像头扫码isbn
-      scan() {
-            let that = this;
-            wx.scanCode({
-                  onlyFromCamera: false,
-                  scanType: ['barCode'],
-                  success: res => {
-                        wx.showToast({
-                              title: '扫码成功',
-                              icon: 'success'
-                        })
-                        that.setData({
-                              isbn: res.result
-                        })
-                  },
-                  fail() {
-                        wx.showToast({
-                              title: '扫码失败，请重新扫码或者手动输入',
-                              icon: 'none'
-                        })
-                  }
-            })
       },
       confirm() {
             //
@@ -282,18 +228,27 @@ Page({
                   }
             })
       },
-      //价格输入改变
-      priceChange(e) {
-            this.data.price = e.detail;
+      //价格输入
+      priceInput(e) {
+            console.log(e)
+            this.data.price = e.detail.value;
       },
-      //时才输入改变
+      //时长输入改变
       duraChange(e) {
+            console.log(e)
             this.data.dura = e.detail;
       },
-      //地址输入
-      placeInput(e) {
+      //数量输入改变
+      quantityChange(e) {
             console.log(e)
-            this.data.place = e.detail.value
+            this.data.quantity = e.detail;
+      },
+      //实付金额输入
+      payInput(e) {
+            console.log(e)
+            this.setData({
+                  'selectShow.pay': e.detail.value,
+            })
       },
       //书籍类别选择
       kindChange(e) {
@@ -310,11 +265,23 @@ Page({
             })
             console.log(that.data.kindid)
       },
-      //选择专业
-      choCollege(e) {
+      choSession(e) {
             let that = this;
+            let _selected = this.data.selectShow.sessions[e.detail.value]
+            // console.log(this.data.selectShow.sessions[e.detail.value])
             that.setData({
-                  cids: e.detail.value
+                  'selectShow.sessionIndex': e.detail.value,
+                  'selectShow.sessionName': _selected.sessionName,
+                  'selectShow.showSessionOID': _selected.showSessionOID,
+            })
+      },
+      choSeatPlan(e) {
+            // originalPrice
+            let that = this;
+            let _selected = this.data.selectShow.seatplans[e.detail.value]
+            that.setData({
+                  seatplanIndex: e.detail.value,
+                  'selectShow.originalPrice': _selected,
             })
       },
       //取货方式改变
@@ -350,25 +317,15 @@ Page({
       check_pub() {
             let that = this;
             //如果用户选择了专业类书籍，需要选择学院
-            if (that.data.kind[1].check) {
-                  if (that.data.cids == -1) {
-                        wx.showToast({
-                              title: '请选择学院',
-                              icon: 'none',
-                        });
-                        return false;
-                  }
-            }
-            //如果用户选择了自提，需要填入详细地址
-            if (that.data.delivery[0].check) {
-                  if (that.data.place == '') {
-                        wx.showToast({
-                              title: '请输入地址',
-                              icon: 'none',
-                        });
-                        return false;
-                  }
-            }
+            // if (that.data.kind[1].check) {
+            //       if (that.data.cids == -1) {
+            //             wx.showToast({
+            //                   title: '请选择学院',
+            //                   icon: 'none',
+            //             });
+            //             return false;
+            //       }
+            // }
             that.publish();
       },
       //正式发布
@@ -379,27 +336,28 @@ Page({
                   content: '经检测您填写的信息无误，是否马上发布？',
                   success(res) {
                         if (res.confirm) {
+                              console.log(that.data.selectShow)
                               db.collection('publish').add({
                                     data: {
                                           creat: new Date().getTime(),
                                           dura: new Date().getTime() + that.data.dura * (24 * 60 * 60 * 1000),
                                           status: 0, //0在售；1买家已付款，但卖家未发货；2买家确认收获，交易完成；3、交易作废，退还买家钱款
                                           price: that.data.price, //售价
+                                          quantity: that.data.quantity, //数量
                                           //分类
-                                          kindid: that.data.kindid, //区别通用还是专业
-                                          collegeid: that.data.cids, //学院id，-1表示通用类
-                                          deliveryid: that.data.chooseDelivery, //0自1配
-                                          place: that.data.place, //选择自提时地址
+                                          kindid: that.data.kindid, //出票，换票，求票，赠票
                                           notes: that.data.notes, //备注
-                                          bookinfo: {
-                                                _id: that.data.bookinfo._id,
-                                                author: that.data.bookinfo.author,
-                                                edition: that.data.bookinfo.edition,
-                                                pic: that.data.bookinfo.pic,
-                                                price: that.data.bookinfo.price,
-                                                title: that.data.bookinfo.title,
+                                          myTicketInfo: {
+                                                pay:that.data.selectShow.pay,
+                                                originalPrice:that.data.selectShow.originalPrice,
+                                                showDate: that.data.selectShow.showDate,
+                                                showName: that.data.selectShow.showName,
+                                                showOID: that.data.selectShow.showOID,
+                                                sessionName: that.data.selectShow.sessionName,
+                                                showSessionOID: that.data.selectShow.showSessionOID,
+                                                venueName: that.data.selectShow.venueName
                                           },
-                                          key: that.data.bookinfo.title + that.data.bookinfo.keyword
+                                          // key: that.data.bookinfo.title + that.data.bookinfo.keyword
                                     },
                                     success(e) {
                                           console.log(e)
@@ -422,6 +380,13 @@ Page({
       },
       select(e){
             console.log(this.data)
+            if (this.data.kindid>0) {
+                  wx.showToast({
+                        title: 'coming soon!!!',
+                        icon: 'none'
+                  })
+                  return false;
+            }
             this.get_show(this.data.selectShow.showOID)
             this.setData({
                   show_a: false,

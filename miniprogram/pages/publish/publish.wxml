@@ -12,7 +12,7 @@
                   <image class="search_ico" src="/images/right.png"></image>
             </view>
             <view class="list_item">{{selectShow.venueName}}</view>
-            <view class="list_item">{{selectShow.showDate}}</view>
+            <view class="list_item">{{selectShow.sessionName?selectShow.sessionName:selectShow.showDate}}</view>
       </view>
 </view>
 <view class="show_contain show_change" wx:if="{{kindid!=0}}">
@@ -94,10 +94,10 @@
                   <view class="b_border"></view>
                   <view class="b_bar">
                         <view class="b_name">演出场次</view>
-                        <picker range="{{selectShow.sessions}}" range-key="sessionName" value="{{cids}}" bindchange="choCollege">
+                        <picker range="{{selectShow.sessions}}" range-key="sessionName" value="{{selectShow.sessionIndex}}" bindchange="choSession">
                               <view class="b_picker">
-                                    <block wx:if="{{cids!==-1}}">当前选择：{{selectShow.sessions[cids].sessionName}}</block>
-                                    <block wx:if="{{cids==-1}}">请选择场次</block>
+                                    <block wx:if="{{selectShow.sessionIndex!==-1}}">当前选择：{{selectShow.sessions[selectShow.sessionIndex].sessionName}}</block>
+                                    <block wx:if="{{selectShow.sessionIndex==-1}}">请选择场次</block>
                                     <image class="right" src="/images/right.png" />
                               </view>
                         </picker>
@@ -105,28 +105,53 @@
                   <view class="b_border"></view>
                   <view class="b_bar">
                         <view class="b_name">演出票面</view>
-                        <picker range="{{selectShow.seatplans}}" value="{{cids}}" bindchange="choCollege">
+                        <picker range="{{selectShow.seatplans}}" value="{{seatplanIndex}}" bindchange="choSeatPlan">
                               <view class="b_picker">
-                                    <block wx:if="{{cids!==-1}}">当前选择：{{selectShow.seatplans[cids]}}票面</block>
-                                    <block wx:if="{{cids==-1}}">请选择票面</block>
+                                    <block wx:if="{{seatplanIndex!==-1}}">当前选择：{{selectShow.seatplans[seatplanIndex]}}票面</block>
+                                    <block wx:if="{{seatplanIndex==-1}}">请选择票面</block>
                                     <image class="right" src="/images/right.png" />
                               </view>
                         </picker>
                   </view>
                   <view class="b_border"></view>
                   <view class="b_bar">
-                        <view class="name">备注信息</view>
+                        <view class="b_name">数量(张)</view>
+                        <van-stepper bind:change="quantityChange" value="{{quantity}}" min="1" max="5" />
+                  </view>
+                  <view class="b_border"></view>
+                  <view class="b_bar">
+                        <view class="b_name">实付金额(总价)</view>
+                        <view class="b_nobi">※ 必填</view>
+                  </view>
+                  <view class="b_place">
+                        <view class="b_plecebox">
+                              <input placeholder-class="phClass" placeholder="如“180”" value="{{selectShow.pay}}" bind:input="payInput" />
+                        </view>
+                  </view>
+                  <view class="b_border"></view>
+                  <view class="b_bar">
+                        <view class="b_name">出票价格(总价)</view>
+                        <view class="b_nobi">※ 必填</view>
+                  </view>
+                  <view class="b_place">
+                        <view class="b_plecebox">
+                              <input placeholder-class="phClass" placeholder="如“180”" value="{{price}}" bindinput="priceInput" />
+                        </view>
+                  </view>
+                  <view class="b_border"></view>
+                  <view class="b_bar">
+                        <view class="b_name">备注信息</view>
                         <view class="b_nobi">※ 非必填</view>
                   </view>
                   <view class="b_notes">
                         <view class="b_text">
-                              <textarea value="{{notes}}" bindinput="noteInput" maxlength="50" placeholder="请随便说点相关的"></textarea>
+                              <textarea placeholder-class="phClass" value="{{notes}}" bindinput="noteInput" maxlength="50" placeholder="根据个人情况填写，比如卡司，座位等"></textarea>
                               <view class="b_less">{{note_counts}}/50</view>
                         </view>
                   </view>
                   <view class="b_bar">
-                        <view class="name">发布时长(天)</view>
-                        <van-stepper bind:change="duraChange" value="{{dura}}" min="1" max="50" />
+                        <view class="b_name">发布时长(天)</view>
+                        <van-stepper bind:change="duraChange" value="{{dura}}" min="1" max="14" />
                   </view>
                   <view class="b_tips">
                         <text>* </text>此时长内您的发布信息将会展示给所有同学，超时后您只需去个人中心处擦亮即可再次展示</view>

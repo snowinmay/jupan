@@ -223,73 +223,6 @@
       height: 40rpx;
 }
 
-.list_box {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      padding: 20rpx;
-      box-sizing: border-box;
-      margin-top: 10rpx;
-}
-
-.list_poster {
-      width: 230rpx;
-      height: 230rpx;
-}
-
-.list_content {
-      height: 230rpx;
-      width: calc(100% - 230rpx);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 0 10rpx;
-      box-sizing: border-box;
-}
-
-.list_word {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      box-sizing: border-box;
-}
-
-.list_title {
-      width: 100%;
-      font-size: 32rpx;
-      letter-spacing: 3rpx;
-      line-height: 45rpx;
-}
-
-.list_author {
-      padding-top: 10rpx;
-      width: 100%;
-      font-size: 27rpx;
-      letter-spacing: 3rpx;
-      line-height: 40rpx;
-      color: rgb(129, 129, 129);
-}
-
-.list_between {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      border-bottom: 1rpx solid #eee;
-      padding-bottom: 10rpx;
-}
-
-.list_price {
-      font-size: 36rpx;
-      color: rgb(255, 0, 0);
-}
-
-.list_time {
-      font-size: 28rpx;
-      letter-spacing: 2rpx;
-      color: rgb(129, 129, 129);
-}
-
 .nocontent {
       width: 100%;
       height: calc(100% - 400rpx);
@@ -323,4 +256,85 @@
       height: 91rpx;
       width: 100%;
       background: #fff;
+}
+
+.list_box {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      padding: 15rpx;
+      box-sizing: border-box;
+      border-bottom: 1rpx solid #eee;
+}
+
+.list_poster {
+      width: 230rpx;
+      height: 230rpx;
+}
+
+.list_content {
+      width:100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 0 10rpx;
+      box-sizing: border-box;
+}
+
+.list_word {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      box-sizing: border-box;
+}
+
+.list_title {
+      width: 100%;
+      font-size: 27rpx;
+      letter-spacing: 3rpx;
+      line-height: 45rpx;
+}
+
+.list_author {
+      font-size: 22rpx;
+      letter-spacing: 3rpx;
+      line-height: 40rpx;
+      color: rgb(129, 129, 129);
+}
+
+.list_between {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+}
+
+.list_oprice {
+      color: #07c160;
+}
+.list_price {
+      font-size: 32rpx;
+      color: #c30101;
+}
+.list_pay {
+    font-size: 22rpx;
+    text-decoration: line-through;
+    letter-spacing: 3rpx;
+    margin-left: 30rpx;
+    color: rgb(129, 129, 129);
+}
+.list_time {
+      font-size: 22rpx;
+      letter-spacing: 2rpx;
+      color: rgb(129, 129, 129);
+}
+.highlight{
+      color:#c30101;
+}
+.title_icon{
+    border: 1px solid #07c160;
+    color: #07c160;
+    border-radius: 10px;
+    padding: 2px 5px;
+    font-size: 22rpx;
 }

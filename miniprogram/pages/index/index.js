@@ -5,40 +5,16 @@ const _ = db.command;
 Page({
       data: {
             college: JSON.parse(config.data).college,
-            collegeCur: -2,
+            collegeCur: -1,
             showList: false,
             scrollTop: 0,
             nomore: false,
-            list: [{
-                  '_id':"11111",
-                  "creat":'1614907532958',
-                  "price":'180',
-                  "type":'换',//换、求，出
-                  "bookinfo":{
-                        showTime: "2021-05-30 星期日 19:30:00",
-                        showName: "【上海站】「陈佩斯/杨立新」舞台喜剧《戏台》",
-                        showOID: "5f4715b6c756b11e5c3416d4",
-                        venueName: "上汽·上海文化广场",
-                        pic:'https://img.alicdn.com/bao/uploaded/https://img.alicdn.com/imgextra/i3/2251059038/O1CN01kp11Oi2GdSIK6XgNN_!!2251059038.jpg_q60.jpg_.webp',
-                  }
-            },{
-                  '_id':"11111",
-                  "creat":'1614907532958',
-                  "price":'180',
-                  "type":'换',//换、求，出
-                  "bookinfo":{
-                        showTime: "2021-05-30 星期日 19:30:00",
-                        showName: "【上海站】「陈佩斯/杨立新」舞台喜剧《戏台》",
-                        showOID: "5f4715b6c756b11e5c3416d4",
-                        venueName: "上汽·上海文化广场",
-                        pic:'https://img.alicdn.com/bao/uploaded/https://img.alicdn.com/imgextra/i3/2251059038/O1CN01kp11Oi2GdSIK6XgNN_!!2251059038.jpg_q60.jpg_.webp',
-                  }
-            }],
+            list: [],
       },
       onLoad() {
             this.listkind();
             this.getbanner();
-            // this.getList();
+            this.getList();
       },
       //监测屏幕滚动
       onPageScroll: function(e) {
@@ -93,7 +69,7 @@ Page({
       //学院选择
       collegeSelect(e) {
             this.setData({
-                  collegeCur: e.currentTarget.dataset.id - 1,
+                  collegeCur: e.currentTarget.dataset.id,
                   scrollLeft: (e.currentTarget.dataset.id - 3) * 100,
                   showList: false,
             })
@@ -102,7 +78,7 @@ Page({
       //选择全部
       selectAll() {
             this.setData({
-                  collegeCur: -2,
+                  collegeCur: -1,
                   scrollLeft: -200,
                   showList: false,
             })
@@ -123,15 +99,15 @@ Page({
       },
       getList() {
             let that = this;
-            if (that.data.collegeCur == -2) {
-                  var collegeid = _.neq(-2); //除-2之外所有
+            if (that.data.collegeCur == -1) {
+                  var kindid = _.neq(-1); //除-2之外所有
             } else {
-                  var collegeid = that.data.collegeCur + '' //小程序搜索必须对应格式
+                  var kindid = that.data.collegeCur //小程序搜索必须对应格式
             }
             db.collection('publish').where({
                   status: 0,
                   dura: _.gt(new Date().getTime()),
-                  collegeid: collegeid
+                  kindid: kindid
             }).orderBy('creat', 'desc').limit(20).get({
                   success: function(res) {
                         wx.stopPullDownRefresh(); //暂停刷新动作
@@ -164,15 +140,15 @@ Page({
                   return false
             }
             let page = that.data.page + 1;
-            if (that.data.collegeCur == -2) {
-                  var collegeid = _.neq(-2); //除-2之外所有
+            if (that.data.collegeCur == -1) {
+                  var kindid = _.neq(-1); //除-2之外所有
             } else {
-                  var collegeid = that.data.collegeCur + '' //小程序搜索必须对应格式
+                  var kindid = that.data.collegeCur //小程序搜索必须对应格式
             }
             db.collection('publish').where({
                   status: 0,
                   dura: _.gt(new Date().getTime()),
-                  collegeid: collegeid
+                  kindid: kindid
             }).orderBy('creat', 'desc').skip(page * 20).limit(20).get({
                   success: function(res) {
                         if (res.data.length == 0) {
@@ -213,10 +189,10 @@ Page({
       },
       //跳转详情
       detail(e) {
-            let that = this;
-            wx.navigateTo({
-                  url: '/pages/detail/detail?scene=' + e.currentTarget.dataset.id,
-            })
+            // let that = this;
+            // wx.navigateTo({
+            //       url: '/pages/detail/detail?scene=' + e.currentTarget.dataset.id,
+            // })
       },
       //获取轮播
       getbanner() {

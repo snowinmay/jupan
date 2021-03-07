@@ -34,33 +34,6 @@
                         <view class="blank_text">暂无{{key}}相关书籍哟~</view>
                   </view>
             </block>
-            <view class="a">
-                  <image src="/images/recommend.png"></image>
-                  <view>更多推荐</view>
-            </view>
-            <block wx:if="{{newlist.length==0}}">
-                  <view class="nosearch">暂无相关推荐</view>
-            </block>
-            <block wx:if="{{newlist.length>0}}">
-                  <block wx:for="{{newlist}}" wx:key="_id">
-                        <view class="list_box" bindtap="detail" data-item="{{item}}">
-                              <image class="list_poster" src="{{item.bookinfo.pic}}"></image>
-                              <view class="list_content">
-                                    <view class="list_word">
-                                          <view class="list_title text-cut">{{item.bookinfo.title}}
-                                          </view>
-                                          <view class="list_author text-cut">{{item.bookinfo.author}}
-                                          </view>
-                                    </view>
-                                    <view class="list_between">
-                                          <view class="list_price">￥{{item.price}}.00元</view>
-                                          <view class="list_time">{{morejs.timelog(item.creat )}}发布
-                                          </view>
-                                    </view>
-                              </view>
-                        </view>
-                  </block>
-            </block>
       </block>
       <block wx:if="{{list.length>0}}">
             <view class="a">

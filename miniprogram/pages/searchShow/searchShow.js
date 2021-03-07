@@ -71,6 +71,8 @@ Page({
       select(e) {
             let that = this;
             let show = e.currentTarget.dataset.item
+            show.seatplanIndex = '-1' //座位的默认值
+            show.sessionIndex = '-1' //场次的默认值
             // wx.navigateTo({
             //       url: '/pages/detail/detail?scene=' + e.currentTarget.dataset.id,
             // })

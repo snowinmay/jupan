@@ -18,55 +18,34 @@
 <view class="{{scrollTop>310?'nofixed':''}}">
 </view>
 <view class="kind_contain {{scrollTop>310?'fixed':''}}">
-      <view class="nav-item {{-2==collegeCur?'tab-on':''}}" bindtap="selectAll">
+      <view class="nav-item {{-1==collegeCur?'tab-on':''}}" bindtap="selectAll">
             <view class="nav-text">全部</view>
       </view>
       <view class="nav-item" wx:for="{{college}}" wx:key="id" bindtap="collegeSelect" data-id="{{index}}">
-            <view class="nav-text {{index==collegeCur+1?'tab-on':''}}">{{item.name}}</view>
-      </view>
-</view>
-<!--宫格显示-->
-<view hidden="{{!iscard}}">
-      <view class="card_grid" wx:if="{{list.length>0}}">
-            <block wx:for="{{list}}" wx:key="_id">
-                  <view class="card_one" bindtap="detail" data-id="{{item._id}}">
-                        <image lazy-load class="card_poster" src="{{item.bookinfo.pic}}"></image>
-                        <view class="card_title text-cut">{{item.bookinfo.title}}
-                        </view>
-                        <view class="card_author text-cut">{{item.bookinfo.author}}
-                        </view>
-                        <view class="card_between">
-                              <view class="card_price">￥{{item.price}}.00元</view>
-                              <image lazy-load class="card_buy" src="/images/buy.png"></image>
-                        </view>
-                  </view>
-            </block>
+            <view class="nav-text {{item.id==collegeCur?'tab-on':''}}">{{item.name}}</view>
       </view>
 </view>
 <!--列表显示-->
-<!--<image lazy-load class="list_poster" src="{{item.bookinfo.pic}}"></image>-->
-<view hidden="{{iscard}}">
-      <block wx:if="{{list.length>0}}">
-            <block wx:for="{{list}}" wx:key="_id">
-                  <view class="list_box" bindtap="detail" data-id="{{item._id}}">
-                        
-                        <view class="list_content">
-                              <view class="list_word">
-                                    <view class="list_title text-cut">{{item.bookinfo.showName}}
-                                    </view>
-                                    <view class="list_author text-cut">{{item.bookinfo.venueName}}
-                                    </view>
+<block wx:if="{{list.length>0}}">
+      <block wx:for="{{list}}" wx:key="_id">
+            <view class="list_box" bindtap="detail" data-id="{{item._id}}">
+                  
+                  <view class="list_content">
+                        <view class="list_word">
+                              <view class="list_title"><span class="title_icon">我有</span>{{item.myTicketInfo.showName}},票面：<span class="list_oprice">￥{{item.myTicketInfo.originalPrice}} X {{item.quantity}}</span>
                               </view>
-                              <view class="list_between">
-                                    <view class="list_price">￥{{item.price}}.00元</view>
-                                    <view class="list_time">{{morejs.timelog(item.creat )}}发布
-                                    </view>
+                              <view class="list_author text-cut">场次：{{item.myTicketInfo.sessionName}}{{item.myTicketInfo.venueName}}
+                              </view>
+                        </view>
+                        <view class="list_between">
+                              <view class="list_price">售价：￥{{item.price}}<span class="list_pay"> 实付：￥{{item.myTicketInfo.pay}}</span></view>
+                              <view class="list_time">{{morejs.timelog(item.creat )}}发布
                               </view>
                         </view>
                   </view>
-            </block>
+            </view>
       </block>
-</view>
+</block>
 <!--无内容显示-->
 <view class="nocontent" wx:if="{{list.length==0}}">
       <image lazy-load src="/images/blank.png"></image>

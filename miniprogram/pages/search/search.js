@@ -88,6 +88,7 @@ Page({
             if (n !== 'his') {
                   that.history(key);
             }
+            console.log(key)
             db.collection('publish').where({
                   status: 0,
                   dura: _.gt(new Date().getTime()),
