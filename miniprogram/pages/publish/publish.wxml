@@ -2,7 +2,8 @@
       <van-steps steps="{{ steps }}" active="{{ active }}" active-color="#000000" />
 </view>
 <view style="height:66.8px"></view>
- <view class="show_contain show_want" wx:if="{{kindid!=2}}">
+<view  wx:if="{{show_a || show_b}}">
+<view class="show_contain show_want" wx:if="{{kindid!=2}}">
       <view class="list_content">
             <view  data-type="0"  bindtap="search">
                   <view class="list_title2">
@@ -27,6 +28,7 @@
             <view class="list_item">{{selectShow2.venueName}}</view>
             <view class="list_item">{{selectShow2.showDate}}</view>
       </view>
+</view>
 </view>
 <!--步骤一-->
 <van-transition show="{{ show_a }}" name="fade-right" custom-class="block" duration="{{entime}}">
@@ -125,7 +127,7 @@
                   </view>
                   <view class="b_place">
                         <view class="b_plecebox">
-                              <input placeholder-class="phClass" placeholder="如“180”" value="{{selectShow.pay}}" bind:input="payInput" />
+                              <input type="digit" placeholder-class="phClass" placeholder="如“180”" value="{{selectShow.pay}}" bind:input="payInput" />
                         </view>
                   </view>
                   <view class="b_border"></view>
@@ -148,7 +150,7 @@
                   </view>
                   <view class="b_place">
                         <view class="b_plecebox">
-                              <input placeholder-class="phClass" placeholder="如“180”" value="{{price}}" bindinput="priceInput" />
+                              <input type="digit" placeholder-class="phClass" placeholder="如“180”" value="{{price}}" bindinput="priceInput" />
                         </view>
                   </view>
                   <view class="b_border"></view>
@@ -168,10 +170,11 @@
                   </view>
                   <view class="b_notes">
                         <view class="b_text">
-                              <textarea placeholder-class="phClass" value="{{notes}}" bindinput="noteInput" maxlength="50" placeholder="根据个人情况填写，比如卡司，座位等"></textarea>
+                              <textarea placeholder-class="phClass" placeholder-style="font-size:27rpx;" value="{{notes}}" bindinput="noteInput" maxlength="50" placeholder="根据个人情况填写，比如卡司，座位等"></textarea>
                               <view class="b_less">{{note_counts}}/50</view>
                         </view>
                   </view>
+                  <view class="b_border"></view>
                   <view class="b_bar">
                         <view class="b_name">发布时长(天)</view>
                         <van-stepper bind:change="duraChange" value="{{dura}}" min="1" max="14" />
@@ -190,6 +193,6 @@
             <view class="c_title">恭喜您 发布成功</view>
             <view class="c_des">订单的实时状态将通过短信和邮箱通知您</view>
             <view class="c_see" bindtap="detail" >查看详情</view>
-            <view class="c_again shadow" bindtap="initial">再来一本</view>
+            <view class="c_again shadow" bindtap="initial">再次发布</view>
       </view>
 </van-transition>

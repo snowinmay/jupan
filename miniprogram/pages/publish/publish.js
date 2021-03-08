@@ -323,16 +323,48 @@ Page({
       //发布校检
       check_pub() {
             let that = this;
-            //如果用户选择了专业类书籍，需要选择学院
-            // if (that.data.kind[1].check) {
-            //       if (that.data.cids == -1) {
-            //             wx.showToast({
-            //                   title: '请选择学院',
-            //                   icon: 'none',
-            //             });
-            //             return false;
-            //       }
-            // }
+            if (!that.data.selectShow.sessionName) {
+                  wx.showToast({
+                        title: '请选择演出场次',
+                        icon: 'none',
+                  });
+                  return false;
+            }
+            if (!that.data.selectShow.originalPrice) {
+                  wx.showToast({
+                        title: '请选择演出票面',
+                        icon: 'none',
+                  });
+                  return false;
+            }
+            if (!that.data.selectShow.pay) {
+                  wx.showToast({
+                        title: '请输入实付金额',
+                        icon: 'none',
+                  });
+                  return false;
+            }
+            if (!that.data.orderImage) {
+                  wx.showToast({
+                        title: '请上传实付截图',
+                        icon: 'none',
+                  });
+                  return false;
+            }
+            if (!that.data.price) {
+                  wx.showToast({
+                        title: '请输入出票价格',
+                        icon: 'none',
+                  });
+                  return false;
+            }
+            if (!that.data.contact) {
+                  wx.showToast({
+                        title: '请输入联系方式',
+                        icon: 'none',
+                  });
+                  return false;
+            }
             that.publish();
       },
       //正式发布
@@ -396,6 +428,13 @@ Page({
                   })
                   return false;
             }
+            if (Object.keys(this.data.selectShow).length === 0) {
+                  wx.showToast({
+                        title: '请选择演出',
+                        icon: 'none'
+                  })
+                  return false;
+            }
             this.get_show(this.data.selectShow.showOID)
             this.setData({
                   show_a: false,
@@ -425,12 +464,9 @@ Page({
                 success(res){
                       wx.hideLoading()
                       console.log(res.fileID)
-                      if (res.statusCode==200) {
-                            that.setData({
-                                    orderImage: res.fileID
-                              })
-                      }
-                  console.log(res);
+                      that.setData({
+                              orderImage: res.fileID
+                        })
                 }
               })
             },

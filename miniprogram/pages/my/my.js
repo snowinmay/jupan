@@ -31,6 +31,13 @@ Page({
                         return false
                   }
             }
+            if (e.currentTarget.dataset.go == "/pages/order/list/list") {
+                  wx.showToast({
+                        title: 'coming soon!!!',
+                        icon: 'none'
+                  })
+                  return false;
+            }
             wx.navigateTo({
                   url: e.currentTarget.dataset.go
             })

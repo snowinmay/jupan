@@ -566,7 +566,7 @@ picker {
 }
 
 .b_upload{
-      width: 70rpx;
-    height: 70rpx;
+      width: 60rpx;
+    height: 60rpx;
     margin-top: 50rpx;
 }

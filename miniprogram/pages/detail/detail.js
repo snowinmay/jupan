@@ -28,8 +28,7 @@ Page({
             db.collection('publish').doc(e).get({
                   success: function(res) {
                         that.setData({
-                              collegeName: JSON.parse(config.data).college[parseInt(res.data.collegeid) + 1],
-                              publishinfo: res.data
+                             publishinfo: res.data
                         })
                         that.getSeller(res.data._openid, res.data.bookinfo._id)
                   }

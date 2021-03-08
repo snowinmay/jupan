@@ -30,13 +30,6 @@
 </view>
 <view class="blank"></view>
 <view class="bottom_box">
-      <view class="bottom_card" bindtap="go" data-go="/pages/kefu/kefu" data-status="1">
-            <view class="bottom_1">
-                  <image src="/images/kefu.png"></image>
-                  <view>联系客服</view>
-            </view>
-            <image src="/images/go.png"></image>
-      </view>
       <view class="bottom_card">
             <view class="bottom_1">
                   <image src="/images/feedback.png"></image>
@@ -44,13 +37,6 @@
             </view>
             <image src="/images/go.png"></image>
             <button open-type="feedback"></button>
-      </view>
-      <view class="bottom_card" bindtap="showShare">
-            <view class="bottom_1">
-                  <image src="/images/fen.png"></image>
-                  <view>好用分享</view>
-            </view>
-            <image src="/images/go.png"></image>
       </view>
       <view class="bottom_card" bindtap="go" data-go="/pages/about/about">
             <view class="bottom_1">
