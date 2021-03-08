@@ -4,7 +4,6 @@
             <image class="search_ico" src="/images/search.png"></image>
             <view class="search_text">搜索演出名称，例如：面试</view>
       </view>
-      <image bindtap="changeCard" class="top_list" src="{{iscard?'/images/list.png':'/images/card.png'}}"></image>
 </view>
 <swiper class="banner" indicator-dots autoplay indicator-active-color="#07c160" circular>
       <block wx:for="{{banner}}" wx:key="id">

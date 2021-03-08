@@ -130,12 +130,35 @@
                   </view>
                   <view class="b_border"></view>
                   <view class="b_bar">
+                        <view class="b_name">实付截图</view>
+                        <view class="b_nobi">※ 必填</view>
+                  </view>
+                  <view class="b_notes">
+                        <view class="b_text b_upload_box" wx:if="{{!orderImage}}">
+                        <image bindtap="upImg" class="b_upload" src="/images/upload.png"></image>
+                        </view>
+                        <view class="b_text" wx:if="{{orderImage}}">
+                        <image style="width:100%;" mode="aspectFill" src="{{orderImage}}"></image>
+                        </view>
+                  </view>
+                  <view class="b_border"></view>
+                  <view class="b_bar">
                         <view class="b_name">出票价格(总价)</view>
                         <view class="b_nobi">※ 必填</view>
                   </view>
                   <view class="b_place">
                         <view class="b_plecebox">
                               <input placeholder-class="phClass" placeholder="如“180”" value="{{price}}" bindinput="priceInput" />
+                        </view>
+                  </view>
+                  <view class="b_border"></view>
+                  <view class="b_bar">
+                        <view class="b_name">联系方式</view>
+                        <view class="b_nobi">※ 必填</view>
+                  </view>
+                  <view class="b_place">
+                        <view class="b_plecebox">
+                              <input placeholder-class="phClass" placeholder="输入并注明联系方式" value="{{contact}}" bind:input="contactInput" />
                         </view>
                   </view>
                   <view class="b_border"></view>

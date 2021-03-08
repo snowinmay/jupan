@@ -10,11 +10,11 @@
       width: 100%;
       display: flex;
       flex-direction: column;
-      padding: 30rpx;
+      padding: 22rpx;
       box-sizing: border-box;
       box-shadow: 0 0 20rpx #eee;
-      border-radius: 16rpx;
-      margin-bottom: 30rpx;
+      border-radius: 10rpx;
+      margin-bottom: 22rpx;
 }
 
 .a {
@@ -22,12 +22,10 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1rpx solid #eee;
-      padding-bottom: 24rpx;
 }
 
 .a1 {
-      font-size: 30rpx;
+      font-size: 27rpx;
       letter-spacing: 2rpx;
       display: flex;
       align-items: ;
@@ -38,13 +36,13 @@
 }
 
 .a1 image {
-      width: 40rpx;
-      height: 40rpx;
+      width: 32rpx;
+      height: 32rpx;
       padding-right: 10rpx;
 }
 
 .a2 {
-      font-size: 28rpx;
+      font-size: 22rpx;
       color: #b2b2b2;
       letter-spacing: 2rpx;
 }
@@ -102,7 +100,6 @@
       width: 100%;
       display: flex;
       justify-content: flex-end;
-      padding-top: 20rpx;
 }
 
 .c1 {
@@ -159,4 +156,88 @@
       font-size: 32rpx;
       letter-spacing: 2rpx;
       color: #c6c6c8;
+}
+
+.list_box {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      padding: 15rpx;
+      box-sizing: border-box;
+      border-bottom: 1rpx solid #eee;
+}
+
+.list_poster {
+      width: 230rpx;
+      height: 230rpx;
+}
+
+.list_content {
+      width:100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 10rpx;
+      box-sizing: border-box;
+      border-bottom: 1rpx solid #eee;
+      border-top: 1rpx solid #eee;
+      margin: 20rpx 0;
+}
+
+.list_word {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      box-sizing: border-box;
+}
+
+.list_title {
+      width: 100%;
+      font-size: 27rpx;
+      letter-spacing: 3rpx;
+      line-height: 45rpx;
+}
+
+.list_author {
+      font-size: 22rpx;
+      letter-spacing: 3rpx;
+      line-height: 40rpx;
+      color: rgb(129, 129, 129);
+}
+
+.list_between {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+}
+
+.list_oprice {
+      color: #07c160;
+}
+.list_price {
+      font-size: 32rpx;
+      color: #c30101;
+}
+.list_pay {
+    font-size: 22rpx;
+    text-decoration: line-through;
+    letter-spacing: 3rpx;
+    margin-left: 30rpx;
+    color: rgb(129, 129, 129);
+}
+.list_time {
+      font-size: 22rpx;
+      letter-spacing: 2rpx;
+      color: rgb(129, 129, 129);
+}
+.highlight{
+      color:#c30101;
+}
+.title_icon{
+    border: 1px solid #07c160;
+    color: #07c160;
+    border-radius: 10px;
+    padding: 2px 5px;
+    font-size: 22rpx;
 }

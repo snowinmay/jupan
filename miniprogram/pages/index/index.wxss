@@ -14,7 +14,7 @@
 }
 
 .search_box {
-      width: 620rpx;
+      width: 100%;
       height: 66rpx;
       border-radius: 33rpx;
       background: #fff;

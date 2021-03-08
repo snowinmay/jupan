@@ -558,3 +558,15 @@ picker {
 .phClass{
   font-size: 26rpx;
 }
+.b_upload_box{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.b_upload{
+      width: 70rpx;
+    height: 70rpx;
+    margin-top: 50rpx;
+}

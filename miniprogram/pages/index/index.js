@@ -189,10 +189,10 @@ Page({
       },
       //跳转详情
       detail(e) {
-            // let that = this;
-            // wx.navigateTo({
-            //       url: '/pages/detail/detail?scene=' + e.currentTarget.dataset.id,
-            // })
+            let that = this;
+            wx.navigateTo({
+                  url: '/pages/detail/detail?scene=' + e.currentTarget.dataset.id,
+            })
       },
       //获取轮播
       getbanner() {

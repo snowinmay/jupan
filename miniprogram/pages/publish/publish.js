@@ -31,6 +31,8 @@ Page({
                   dura: 30,
                   price: '',//售价
                   quantity: 1,//数量
+                  contact:'',//联系方式
+                  orderImage:'',//实付截图"cloud://aikan-4gyg06pf350949b1.6169-aikan-4gyg06pf350949b1-1305127265/uploads/422561"
                   show_a: true,
                   show_b: false,
                   show_c: false,
@@ -229,6 +231,11 @@ Page({
             })
       },
       //价格输入
+      contactInput(e) {
+            console.log(e)
+            this.data.contact = e.detail.value;
+      },
+      //价格输入
       priceInput(e) {
             console.log(e)
             this.data.price = e.detail.value;
@@ -343,10 +350,12 @@ Page({
                                           dura: new Date().getTime() + that.data.dura * (24 * 60 * 60 * 1000),
                                           status: 0, //0在售；1买家已付款，但卖家未发货；2买家确认收获，交易完成；3、交易作废，退还买家钱款
                                           price: that.data.price, //售价
+                                          contact: that.data.contact, //售价
                                           quantity: that.data.quantity, //数量
                                           //分类
                                           kindid: that.data.kindid, //出票，换票，求票，赠票
                                           notes: that.data.notes, //备注
+                                          orderImage: that.data.orderImage, //备注
                                           myTicketInfo: {
                                                 pay:that.data.selectShow.pay,
                                                 originalPrice:that.data.selectShow.originalPrice,
@@ -400,5 +409,34 @@ Page({
             wx.navigateTo({
                   url: '/pages/detail/detail?scene=' + that.data.detail_id,
             })
+      },
+      upImg(){
+          var that = this;
+          wx.chooseImage({
+            count: 1,
+            success(res){
+              console.log(res);
+              wx.showLoading({
+                  title: '正在上传'
+              })
+              wx.cloud.uploadFile({
+                cloudPath:'uploads/' + Math.floor(Math.random()*1000000),
+                filePath:res.tempFilePaths[0],
+                success(res){
+                      wx.hideLoading()
+                      console.log(res.fileID)
+                      if (res.statusCode==200) {
+                            that.setData({
+                                    orderImage: res.fileID
+                              })
+                      }
+                  console.log(res);
+                }
+              })
+            },
+            fail(res){
+                  wx.hideLoading()
+            }
+          })
       }
 })
