@@ -17,14 +17,14 @@ var data = {
       bgurl: '/images/startBg.jpg',
       //配置学院，建议不要添加太多，不然前端不好看
       college: [
-            {
-                  name: '转票',
-                  id: 0
-            },
-            {
-                  name: '换票',
-                  id: 1
-            }
+            // {
+            //       name: '转票',
+            //       id: 0
+            // },
+            // {
+            //       name: '换票',
+            //       id: 1
+            // }
       ],
 }
 //下面的就别动了

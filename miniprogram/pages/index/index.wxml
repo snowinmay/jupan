@@ -18,7 +18,7 @@
 </view>
 <view class="kind_contain {{scrollTop>310?'fixed':''}}">
       <view class="nav-item {{-1==collegeCur?'tab-on':''}}" bindtap="selectAll">
-            <view class="nav-text">全部</view>
+            <view style="width: 33.33%;" class="nav-text">转票信息</view>
       </view>
       <view class="nav-item" wx:for="{{college}}" wx:key="id" bindtap="collegeSelect" data-id="{{index}}">
             <view class="nav-text {{item.id==collegeCur?'tab-on':''}}">{{item.name}}</view>

@@ -356,6 +356,22 @@ Page({
                         title: '请输入出票价格',
                         icon: 'none',
                   });
+                  return false;                  
+            }
+            console.log(that.data.price)
+            console.log(that.data.selectShow.pay)
+            if (that.data.price>that.data.selectShow.pay) {
+                  wx.showToast({
+                        title: '出票价格不能高于实付价格',
+                        icon: 'none',
+                  });
+                  return false;
+            }
+            if (that.data.price>that.data.selectShow.originalPrice) {
+                  wx.showToast({
+                        title: '出票价格不能高于票面价格',
+                        icon: 'none',
+                  });
                   return false;
             }
             if (!that.data.contact) {

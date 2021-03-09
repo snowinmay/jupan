@@ -33,7 +33,7 @@
 <!--步骤一-->
 <van-transition show="{{ show_a }}" name="fade-right" custom-class="block" duration="{{entime}}">
       <view class="a_contain">
-            <view class="b_card">
+            <view class="b_card" style="display:none">
                   <view class="public_type list_content">
                         <view class="b_name">发布类别</view>
                         <block>
@@ -85,7 +85,7 @@
 <van-transition show="{{ show_b }}" name="fade-right" custom-class="block" duration="{{entime}}">
       <view class="b_ccontain">
             <view class="b_card">
-                  <view class="b_bar">
+                  <view class="b_bar" style="display:none">
                         <view class="b_name">发布类别</view>
                         <radio-group class="kind-group" bindchange="kindChange">
                               <label class="b_radio" wx:for="{{kind}}" wx:key="id">
@@ -93,7 +93,6 @@
                               </label>
                         </radio-group>
                   </view>
-                  <view class="b_border"></view>
                   <view class="b_bar">
                         <view class="b_name">演出场次</view>
                         <picker range="{{selectShow.sessions}}" range-key="sessionName" value="{{selectShow.sessionIndex}}" bindchange="choSession">

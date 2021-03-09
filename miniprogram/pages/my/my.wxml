@@ -19,13 +19,18 @@
             <image src="/images/history.png"></image>
             <view>我的发布</view>
       </view>
-      <view class="center_1" bindtap="go" data-go="/pages/order/list/list" data-status="1">
+      <view style="display:none" class="center_1" bindtap="go" data-go="/pages/order/list/list" data-status="1">
             <image src="/images/publish.png"></image>
             <view>我的购买</view>
       </view>
       <view class="center_1" bindtap="go" data-go="/pages/help/help">
             <image src="/images/help.png"></image>
             <view>帮助中心</view>
+      </view>
+
+      <view class="center_1" bindtap="go" data-go="/pages/about/about">
+            <image src="/images/publish.png"></image>
+            <view>关于程序</view>
       </view>
 </view>
 <view class="blank"></view>
@@ -38,7 +43,7 @@
             <image src="/images/go.png"></image>
             <button open-type="feedback"></button>
       </view>
-      <view class="bottom_card" bindtap="go" data-go="/pages/about/about">
+      <view style="display:none" class="bottom_card" bindtap="go" data-go="/pages/about/about">
             <view class="bottom_1">
                   <image src="/images/guanyu.png"></image>
                   <view>关于程序</view>
