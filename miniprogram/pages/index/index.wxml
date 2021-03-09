@@ -8,7 +8,7 @@
 <swiper class="banner" indicator-dots autoplay indicator-active-color="#07c160" circular>
       <block wx:for="{{banner}}" wx:key="id">
             <swiper-item>
-                  <image lazy-load src="{{item.img}}" bindtap="goweb" data-web="{{item}}" class="banner_image" />
+                  <image lazy-load src="{{item.img}}" data-web="{{item}}" class="banner_image" />
             </swiper-item>
       </block>
 </swiper>
@@ -37,7 +37,7 @@
                               </view>
                         </view>
                         <view class="list_between">
-                              <view class="list_price">售价：￥{{item.price}}<span class="list_pay"> 实付：￥{{item.myTicketInfo.pay}}</span></view>
+                              <view class="list_price">转让价：￥{{item.price}}<span class="list_pay"> 实付：￥{{item.myTicketInfo.pay}}</span></view>
                               <view class="list_time">{{morejs.timelog(item.creat )}}发布
                               </view>
                         </view>
