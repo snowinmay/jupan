@@ -15,6 +15,9 @@ Page({
             email: '',
             campus: JSON.parse(config.data).campus,
       },
+      onLoad(){
+            this.getOpenid()
+      },
       choose(e) {
             let that = this;
             that.setData({
@@ -94,6 +97,19 @@ Page({
       weiboInput(e) {
             this.data.weibo = e.detail.value;
       },
+      getOpenid(){
+            let that = this;
+            wx.cloud.callFunction({
+              name:'getOpenid',
+              complete:res=>{
+                console.log('云函数获取到的openid:',res.result.openid)
+                var openid = res.result.openid;
+                that.setData({
+                  openid:openid
+                })
+              }
+            })
+      },
       getUserInfo(e) {
             let that = this;
             console.log(e);
@@ -141,6 +157,18 @@ Page({
             wx.showLoading({
                   title: '正在提交',
             })
+
+            // console.log('云函数获取到的openid:',this.data.openid)
+            db.collection('user').where({
+              _openid: this.data.openid
+            })
+            .get({
+              success: function(res) {
+                // res.data 是包含以上定义的两条记录的数组
+                console.log(res.data)
+              }
+            })
+            return false
             db.collection('user').add({
                   data: {
                         qqnum: that.data.qqnum,

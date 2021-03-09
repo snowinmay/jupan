@@ -27,7 +27,6 @@
       "disablePlugins": [],
       "outputPath": ""
     },
-    "enableEngineNative": false,
     "bundle": false,
     "useIsolateContext": true,
     "useCompilerModule": true,
@@ -38,7 +37,7 @@
     "minifyWXSS": true
   },
   "appid": "wx2492ede92f947fd2",
-  "projectname": "转票助手",
+  "projectname": "%E8%BD%AC%E7%A5%A8%E5%8A%A9%E6%89%8B",
   "libVersion": "2.10.1",
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},

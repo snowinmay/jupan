@@ -31,7 +31,7 @@
                   
                   <view class="list_content">
                         <view class="list_word">
-                              <view class="list_title"><span class="title_icon">我有</span>{{item.myTicketInfo.showName}},票面：<span class="list_oprice">￥{{item.myTicketInfo.originalPrice}} X {{item.quantity}}</span>
+                              <view class="list_title">{{item.myTicketInfo.showName}},票面：<span class="list_oprice">￥{{item.myTicketInfo.originalPrice}} X {{item.quantity}}</span>
                               </view>
                               <view class="list_author text-cut">场次：{{item.myTicketInfo.sessionName}}{{item.myTicketInfo.venueName}}
                               </view>

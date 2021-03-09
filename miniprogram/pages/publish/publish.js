@@ -95,7 +95,7 @@ Page({
             if (!app.openid) {
                   wx.showModal({
                         title: '温馨提示',
-                        content: '该功能需要注册方可使用，是否马上去注册',
+                        content: '该功能需要登录，马上登录？',
                         success(res) {
                               if (res.confirm) {
                                     wx.navigateTo({

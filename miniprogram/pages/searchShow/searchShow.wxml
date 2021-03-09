@@ -31,7 +31,7 @@
                   <!--无内容显示-->
                   <view class="nocontent">
                         <image src="/images/blank.png"></image>
-                        <view class="blank_text">暂无{{key}}相关书籍哟~</view>
+                        <view class="blank_text">这里空空如也~</view>
                   </view>
             </block>
       </block>
