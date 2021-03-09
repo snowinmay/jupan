@@ -1,8 +1,22 @@
+const env = __wxConfig.envVersion
+console.log(env)
+if(!env){
+  console.error("获取运行环境失败!");
+}
+
+const cloudEnvID = {
+  // 开发版 
+  develop: "aikan-4gyg06pf350949b1",
+  // 体验版
+  trial: "aikan-prod-7g6ftqaraa5e6df0",
+  // 正式版
+  release: "aikan-prod-7g6ftqaraa5e6df0"
+};
 var data = {
       //云开发环境id
-      env: 'aikan-4gyg06pf350949b1',
+      env: "aikan-4gyg06pf350949b1",//cloudEnvID[env],//'aikan-4gyg06pf350949b1',//aikan-prod-7g6ftqaraa5e6df0
       //分享配置
-      share_title: '剧盼',
+      share_title: '转票助手',
       share_img: '/images/poster.jpg', //可以是网络地址，本地文件路径要填绝对位置
       share_poster:'https://mmbiz.qpic.cn/mmbiz_jpg/nJPznPUZbhpA064Cl78xxvzBYTDa6O1Kl7RY1K6TerBaXcUf5AoN6x7s8q7xHgeu0Cl5qarPzE6ibbQZasWRErg/640',//必须为网络地址
       //客服联系方式

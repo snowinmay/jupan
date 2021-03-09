@@ -49,36 +49,6 @@
             <view class="a_sao">
                   <button class="shadow" bindtap="select">补充详细信息</button>
             </view>
-            <!--列表显示-->
-            <!--<image lazy-load class="list_poster" src="{{item.bookinfo.pic}}"></image>-->
-            <view hidden="{{iscard}}">
-                  <block wx:if="{{showList.length>0}}">
-                        <block wx:for="{{showList}}" wx:key="showOID">
-                              <view class="list_box" bindtap="select" data-item='{{item}}' data-id="{{item.showOID}}">
-                                    
-                                    <view class="list_content">
-                                          <view class="list_word">
-                                                <view class="list_title">
-                                                      <span>{{item.arr[0]}}</span>
-                                                      <span class="{{item.highlight?'highlight':''}}">{{item.keyword}}</span>
-                                                      <span>{{item.arr[1]}}</span>
-                                                </view>
-                                          </view>
-                                          <view class="list_between">
-                                                <view class="list_author">{{item.venueName}}</view>
-                                                <view class="list_time">{{item.showDate}}
-                                                </view>
-                                          </view>
-                                    </view>
-                              </view>
-                        </block>
-                  </block>
-            </view>
-            <!--无内容显示-->
-            <view class="nocontent" wx:if="{{showList.length==0}}">
-                  <image lazy-load src="/images/blank.png"></image>
-                  <view class="blank_text">这里空空如也~</view>
-            </view>
       </view>
 </van-transition>
 <!--步骤二-->
@@ -95,7 +65,7 @@
                   </view>
                   <view class="b_bar">
                         <view class="b_name">演出场次</view>
-                        <picker range="{{selectShow.sessions}}" range-key="sessionName" value="{{selectShow.sessionIndex}}" bindchange="choSession">
+                        <picker wx:if="{{selectShow.sessions.length>0}}" range="{{selectShow.sessions}}" range-key="sessionName" value="{{selectShow.sessionIndex}}" bindchange="choSession">
                               <view class="b_picker">
                                     <block wx:if="{{selectShow.sessionIndex!==-1}}">当前选择：{{selectShow.sessions[selectShow.sessionIndex].sessionName}}</block>
                                     <block wx:if="{{selectShow.sessionIndex==-1}}">请选择场次</block>
@@ -103,16 +73,26 @@
                               </view>
                         </picker>
                   </view>
+                  <view class="b_place" wx:if="{{selectShow.sessions.length==0}}">
+                        <view class="b_plecebox">
+                              <input type="text" placeholder-class="phClass" placeholder="如“2021.05.14 周五 19:30”" value="{{selectShow.sessionName}}" bind:input="payInput" />
+                        </view>
+                  </view>
                   <view class="b_border"></view>
                   <view class="b_bar">
                         <view class="b_name">演出票面</view>
-                        <picker range="{{selectShow.seatplans}}" value="{{seatplanIndex}}" bindchange="choSeatPlan">
+                        <picker wx:if="{{selectShow.seatplans.length>0}}" range="{{selectShow.seatplans}}" value="{{seatplanIndex}}" bindchange="choSeatPlan">
                               <view class="b_picker">
                                     <block wx:if="{{seatplanIndex!==-1}}">当前选择：{{selectShow.seatplans[seatplanIndex]}}票面</block>
                                     <block wx:if="{{seatplanIndex==-1}}">请选择票面</block>
                                     <image class="right" src="/images/right.png" />
                               </view>
                         </picker>
+                  </view>
+                  <view class="b_place" wx:if="{{selectShow.seatplans.length==0}}">
+                        <view class="b_plecebox">
+                              <input type="digit" placeholder-class="phClass" placeholder="如“180”" value="{{selectShow.originalPrice}}" bind:input="originalPriceInput" />
+                        </view>
                   </view>
                   <view class="b_border"></view>
                   <view class="b_bar">
@@ -155,11 +135,17 @@
                   <view class="b_border"></view>
                   <view class="b_bar">
                         <view class="b_name">联系方式</view>
-                        <view class="b_nobi">※ 必填</view>
+                        <picker range="{{contactType}}" range-key="name" value="{{contactIndex}}" bindchange="contactChange">
+                              <view class="b_picker">
+                                    <block wx:if="{{contactIndex!==-1}}">当前选择：{{contactType[contactIndex].name}}</block>
+                                    <block wx:if="{{contactIndex==-1}}">请选择</block>
+                                    <image class="right" src="/images/right.png" />
+                              </view>
+                        </picker>
                   </view>
                   <view class="b_place">
                         <view class="b_plecebox">
-                              <input placeholder-class="phClass" placeholder="输入并注明联系方式" value="{{contact}}" bind:input="contactInput" />
+                              <input placeholder-class="phClass" placeholder="输入联系方式" value="{{contact}}" bind:input="contactInput" />
                         </view>
                   </view>
                   <view class="b_border"></view>

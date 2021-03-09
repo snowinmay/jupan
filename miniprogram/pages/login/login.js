@@ -11,6 +11,7 @@ Page({
             phone: '',
             wxnum: '',
             qqnum: '',
+            weibo: '',
             email: '',
             campus: JSON.parse(config.data).campus,
       },
@@ -90,8 +91,8 @@ Page({
       qqInput(e) {
             this.data.qqnum = e.detail.value;
       },
-      emInput(e) {
-            this.data.email = e.detail.value;
+      weiboInput(e) {
+            this.data.weibo = e.detail.value;
       },
       getUserInfo(e) {
             let that = this;
@@ -113,36 +114,6 @@ Page({
       //校检
       check() {
             let that = this;
-            //校检手机
-            let phone = that.data.phone;
-            if (phone == '') {
-                  wx.showToast({
-                        title: '请先获取您的电话',
-                        icon: 'none',
-                        duration: 2000
-                  });
-                  return false
-            }
-            //校检校区
-            let ids = that.data.ids;
-            let campus = that.data.campus;
-            if (ids == -1) {
-                  wx.showToast({
-                        title: '请先获取您的校区',
-                        icon: 'none',
-                        duration: 2000
-                  });
-            }
-            //校检邮箱
-            let email = that.data.email;
-            if (!(/^\w+((.\w+)|(-\w+))@[A-Za-z0-9]+((.|-)[A-Za-z0-9]+).[A-Za-z0-9]+$/.test(email))) {
-                  wx.showToast({
-                        title: '请输入常用邮箱',
-                        icon: 'none',
-                        duration: 2000
-                  });
-                  return false;
-            }
             //校检QQ号
             let qqnum = that.data.qqnum;
             if (qqnum !== '') {
@@ -172,10 +143,8 @@ Page({
             })
             db.collection('user').add({
                   data: {
-                        phone: that.data.phone,
-                        campus: that.data.campus[that.data.ids],
                         qqnum: that.data.qqnum,
-                        email: that.data.email,
+                        weibo: that.data.weibo,
                         wxnum: that.data.wxnum,
                         stamp: new Date().getTime(),
                         info: that.data.userInfo,

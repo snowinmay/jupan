@@ -33,11 +33,9 @@ Page({
                   success: function(res) {
                         let info = res.data[0];
                         that.setData({
-                              phone: info.phone,
                               qqnum: info.qqnum,
                               wxnum: info.wxnum,
-                              email: info.email,
-                              ids: info.campus.id,
+                              weibo: info.weibo,
                               _id: info._id
                         })
                   },

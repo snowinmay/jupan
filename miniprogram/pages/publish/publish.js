@@ -28,11 +28,13 @@ Page({
       initial() {
             let that = this;
             that.setData({
+                  key:'',
                   dura: 30,
                   price: '',//售价
                   quantity: 1,//数量
                   contact:'',//联系方式
                   orderImage:'',//实付截图"cloud://aikan-4gyg06pf350949b1.6169-aikan-4gyg06pf350949b1-1305127265/uploads/422561"
+                  contactIndex:-1,
                   show_a: true,
                   show_b: false,
                   show_c: false,
@@ -50,10 +52,34 @@ Page({
                         id: 1,
                         check: false
                   }],
+                  contactType: [{
+                        name: '微博',
+                        id: 0,
+                        value:'weibo',
+                        check: true,
+                  }, {
+                        name: '微信',
+                        id: 1,
+                        value:'wxnum',
+                        check: false
+                  } ,{
+                        name: 'QQ',
+                        id: 2,
+                        value:'qqnum',
+                        check: false
+                  } ,{
+                        name: '其他',
+                        id: 3,
+                        value:'other',
+                        check: false
+                  }],
             })
       },
       onLoad() {
             this.initial();
+      },
+      onShow(){
+            console.log(app.userinfo)
       },
       confirm() {
             //
@@ -66,20 +92,20 @@ Page({
             //       });
             //       return false;
             // }
-            // if (!app.openid) {
-            //       wx.showModal({
-            //             title: '温馨提示',
-            //             content: '该功能需要注册方可使用，是否马上去注册',
-            //             success(res) {
-            //                   if (res.confirm) {
-            //                         wx.navigateTo({
-            //                               url: '/pages/login/login',
-            //                         })
-            //                   }
-            //             }
-            //       })
-            //       return false
-            // }
+            if (!app.openid) {
+                  wx.showModal({
+                        title: '温馨提示',
+                        content: '该功能需要注册方可使用，是否马上去注册',
+                        success(res) {
+                              if (res.confirm) {
+                                    wx.navigateTo({
+                                          url: '/pages/login/login',
+                                    })
+                              }
+                        }
+                  })
+                  return false
+            }
             // that.get_book(isbn);
             that.query_shows(isbn);
       },
@@ -89,41 +115,6 @@ Page({
             wx.navigateTo({
                   url: '/pages/searchShow/searchShow?type='+type,
             })
-      },
-      query_shows(keyword) {
-            let that = this;
-            wx.showLoading({
-                  title: '正在获取'
-            })
-            //先检查是否存在该书记录，没有再进行云函数调用
-            wx.request({
-            // header:{
-            //   "x-xsrf-token": "d94666ef-6d26-465b-b218-7c6199a5a0e9",
-            //   'Content-Type': 'application/json'
-            // },
-            url: 'https://www.moretickets.com/showapi/page/index?keyword='+keyword+'&offset=0&length=10',
-            // url: 'https://www.moretickets.com/showapi/pub/v1_2/show/603c7898a81bd0393b0ec348/sessionone?locationCityOID=&time=1614865643440&src=web&sessionOID=',
-            method: 'get',
-            success: function (res) {
-              console.log("wxRequest success")
-              console.log(res)
-              if (res.statusCode==200) {
-                    let results = res.data.result.data
-                    wx.hideLoading();
-                    for (var i = 0; i < results.length; i++) {
-                        util.highlight(results[i],keyword)
-                    }
-                    that.setData({
-                        showList: results,
-                  })
-                  console.log(results)
-              }
-            },
-            fail: function (res) {
-                console.log('fail'+res.statusCode)
-            }
-          })
-            
       },
       get_show(id) {
             let that = this;
@@ -257,6 +248,31 @@ Page({
                   'selectShow.pay': e.detail.value,
             })
       },
+      //票面输入
+      originalPriceInput(e) {
+            console.log(e)
+            this.setData({
+                  'selectShow.originalPrice': e.detail.value,
+            })
+      },
+      contactChange(e){
+            let index = e.detail.value;
+            let type = this.data.contactType[index].value
+            if (app.userinfo[type]) {
+                  this.setData({
+                        contact:app.userinfo[type],
+                        contactIndex: e.detail.value,
+                  })
+            }else{
+                  this.setData({
+                        contact:'',
+                        contactIndex: e.detail.value,
+                  })
+            }
+            console.log(app.userinfo)
+            console.log(app.userinfo[type])
+            console.log(this.contactIndex)
+      },
       //书籍类别选择
       kindChange(e) {
             let that = this;
@@ -360,14 +376,14 @@ Page({
             }
             console.log(that.data.price)
             console.log(that.data.selectShow.pay)
-            if (that.data.price>that.data.selectShow.pay) {
+            if (parseFloat(that.data.price)>parseFloat(that.data.selectShow.pay)) {
                   wx.showToast({
                         title: '出票价格不能高于实付价格',
                         icon: 'none',
                   });
                   return false;
             }
-            if (that.data.price>that.data.selectShow.originalPrice) {
+            if (parseFloat(that.data.price)>parseFloat(that.data.selectShow.originalPrice)) {
                   wx.showToast({
                         title: '出票价格不能高于票面价格',
                         icon: 'none',
@@ -398,12 +414,13 @@ Page({
                                           dura: new Date().getTime() + that.data.dura * (24 * 60 * 60 * 1000),
                                           status: 0, //0在售；1买家已付款，但卖家未发货；2买家确认收获，交易完成；3、交易作废，退还买家钱款
                                           price: that.data.price, //售价
-                                          contact: that.data.contact, //售价
+                                          contact: that.data.contactType[that.data.contactIndex].name + "：" + that.data.contact, //联系方式
                                           quantity: that.data.quantity, //数量
                                           //分类
                                           kindid: that.data.kindid, //出票，换票，求票，赠票
                                           notes: that.data.notes, //备注
                                           orderImage: that.data.orderImage, //备注
+                                          key: that.data.selectShow.showName+that.data.selectShow.venueName+that.data.selectShow.sessionName, //备注
                                           myTicketInfo: {
                                                 pay:that.data.selectShow.pay,
                                                 originalPrice:that.data.selectShow.originalPrice,
@@ -437,19 +454,26 @@ Page({
       },
       select(e){
             console.log(this.data)
-            if (this.data.kindid>0) {
-                  wx.showToast({
-                        title: 'coming soon!!!',
-                        icon: 'none'
-                  })
-                  return false;
-            }
             if (Object.keys(this.data.selectShow).length === 0) {
                   wx.showToast({
                         title: '请选择演出',
                         icon: 'none'
                   })
                   return false;
+            }
+            if (!app.openid) {
+                  wx.showModal({
+                        title: '温馨提示',
+                        content: '该功能需要注册方可使用，是否马上去注册',
+                        success(res) {
+                              if (res.confirm) {
+                                    wx.navigateTo({
+                                          url: '/pages/login/login',
+                                    })
+                              }
+                        }
+                  })
+                  return false
             }
             this.get_show(this.data.selectShow.showOID)
             this.setData({

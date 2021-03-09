@@ -39,12 +39,12 @@
       width: 100%;
       display: flex;
       box-sizing: border-box;
-      height: 184rpx;
+      height: 160rpx;
 }
 
 .banner_image {
       width: 100%;
-      padding: 16rpx 16rpx 12rpx 16rpx;
+      padding: 16rpx;
       display: flex;
       box-sizing: border-box;
       height: 160rpx;
