@@ -27,7 +27,7 @@
             "backgroundColor": "#07c160",
             "backgroundTextStyle": "light",
             "navigationBarBackgroundColor": "#07c160",
-            "navigationBarTitleText": "剧盼",
+            "navigationBarTitleText": "转票助手",
             "navigationBarTextStyle": "white"
       },
       "sitemapLocation": "sitemap.json",

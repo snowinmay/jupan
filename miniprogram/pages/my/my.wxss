@@ -17,34 +17,34 @@
 }
 
 .top_1_1 {
-      font-size: 42rpx;
+      font-size: 32rpx;
       letter-spacing: 2rpx;
 }
 
 .top_1_2 {
-      font-size: 34rpx;
+      font-size: 27rpx;
       color: #919191;
-      line-height: 42rpx;
+      line-height: 80rpx;
 }
 
 .top_2 {
       width: 30%;
-      height: 140rpx;
+      height: 120rpx;
       display: flex;
       justify-content: center;
       align-items: center;
 }
 
 .avator {
-      width: 140rpx;
-      height: 140rpx;
-      border-radius: 70rpx;
+      width: 120rpx;
+      height: 120rpx;
+      border-radius: 60rpx;
       overflow: hidden;
 }
 
 .avator image {
-      width: 140rpx;
-      height: 140rpx;
+      width: 120rpx;
+      height: 120rpx;
 }
 
 .center_box {
