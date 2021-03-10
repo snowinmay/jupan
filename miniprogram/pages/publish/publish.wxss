@@ -314,6 +314,7 @@ picker {
       justify-content: space-between;
       box-sizing: border-box;
       background: rgb(238, 238, 238);
+      position: relative;
 }
 
 .b_text textarea {
@@ -569,4 +570,11 @@ picker {
       width: 60rpx;
     height: 60rpx;
     margin-top: 50rpx;
+}
+.b_del{
+    width: 32rpx;
+    height: 32rpx;
+    position: absolute;
+    right: 20rpx;
+    top: 20rpx;
 }

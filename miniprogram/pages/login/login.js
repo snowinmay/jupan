@@ -207,12 +207,13 @@ Page({
               success: function(res) {
                 // res.data 是包含以上定义的两条记录的数组
                 console.log(res.data)
-                if ((res.data.length>0)) {
-                  let id = res.data[0]._id
-                  db.collection('user').doc(id).update(object)
-                } else {
-                  db.collection('user').add(object)
-                }
+                // if ((res.data.length>0)) {
+                //   let id = res.data[0]._id
+                //   db.collection('user').doc(id).update(object)
+                // } else {
+                //   db.collection('user').add(object)
+                // }
+                db.collection('user').add(object)
               }
             })
             return false

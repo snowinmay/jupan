@@ -270,8 +270,6 @@ Page({
                   })
             }
             console.log(app.userinfo)
-            console.log(app.userinfo[type])
-            console.log(this.contactIndex)
       },
       //书籍类别选择
       kindChange(e) {
@@ -374,8 +372,6 @@ Page({
                   });
                   return false;                  
             }
-            console.log(that.data.price)
-            console.log(that.data.selectShow.pay)
             if (parseFloat(that.data.price)>parseFloat(that.data.selectShow.pay)) {
                   wx.showToast({
                         title: '出票价格不能高于实付价格',
@@ -397,7 +393,79 @@ Page({
                   });
                   return false;
             }
-            that.publish();
+            this.checkContent(function(){
+                  that.publish();
+            })
+      },
+      imgCheck(res,cb){
+          wx.showLoading({
+                title: '正在审核',
+              })
+              //获取图片的临时路径
+              const tempFilePaths = res.tempFilePaths[0]
+              //使用getFileSystemManager获取图片的Buffer流
+              wx.getFileSystemManager().readFile({
+                filePath: tempFilePaths,                   
+                success: (res)=>{
+                      console.log(res)
+                  const buffer = res.data
+                  //调用云函数进行审核
+                  wx.cloud.callFunction({
+                    name: 'imgCheck',              
+                    data:{
+                      'buffer': buffer
+                    }            
+                  }).then(res=>{
+                    wx.hideLoading()
+                    //存在违规
+                    if(res.result.errCode != 0){
+                      wx.showModal({
+                        title: '违规提示',
+                        content: '图片违规',
+                        showCancel: false,
+                        confirmColor: '#DC143C'
+                      })
+                    }else{
+                        cb()
+                    }
+                  })
+                },
+                fail(res){
+                      console.log(res)
+                      wx.hideLoading()
+                  }
+              })
+        },
+      checkContent(cb){
+          //获取文本内容
+          let that = this
+          let content = that.data.selectShow.showName+that.data.selectShow.venueName+that.data.selectShow.sessionName+that.data.contact+that.data.notes
+          console.log(content)
+          wx.showLoading({
+            title: '内容审核中',
+          })
+          //调用云函数进行审核
+          wx.cloud.callFunction({
+            name: 'contentCheck',
+            data:{
+              'content': content
+            }    
+          }).then(res=>{
+            wx.hideLoading()
+            console.log(res.result.errCode)
+            //获取状态码  0 》》》正常   87014》》》违规
+            let errCode = res.result.errCode
+            if(errCode != 0){
+              wx.showModal({
+                title: '违规提示',
+                content: '输入的内容违规',
+                showCancel: false,
+                confirmColor: '#DC143C'
+              })
+            }else{
+                  cb()
+            }      
+          })  
       },
       //正式发布
       publish() {
@@ -464,7 +532,7 @@ Page({
             if (!app.openid) {
                   wx.showModal({
                         title: '温馨提示',
-                        content: '该功能需要注册方可使用，是否马上去注册',
+                        content: '该功能需要登录，马上登录？',
                         success(res) {
                               if (res.confirm) {
                                     wx.navigateTo({
@@ -489,25 +557,49 @@ Page({
                   url: '/pages/detail/detail?scene=' + that.data.detail_id,
             })
       },
+      delImg(e){
+            let that = this
+            wx.showModal({
+                  title: '温馨提示',
+                  content: '您确定要删除图片吗？',
+                  success(res) {
+                        if (res.confirm) {
+                              wx.cloud.deleteFile({
+                                fileList: [that.data.orderImage],
+                                success: res => {
+                                  // handle success
+                                  console.log(res.fileList)
+                                  that.setData({
+                                        orderImage:''
+                                  })
+                                }
+                              })
+                        }
+                  }
+            })
+
+      },
       upImg(){
           var that = this;
           wx.chooseImage({
             count: 1,
             success(res){
               console.log(res);
-              wx.showLoading({
-                  title: '正在上传'
-              })
-              wx.cloud.uploadFile({
-                cloudPath:'uploads/' + Math.floor(Math.random()*1000000),
-                filePath:res.tempFilePaths[0],
-                success(res){
-                      wx.hideLoading()
-                      console.log(res.fileID)
-                      that.setData({
-                              orderImage: res.fileID
-                        })
-                }
+              that.imgCheck(res,function(){
+                    wx.showLoading({
+                        title: '正在上传'
+                    })
+                    wx.cloud.uploadFile({
+                      cloudPath:'uploads/' + Math.floor(Math.random()*1000000),
+                      filePath:res.tempFilePaths[0],
+                      success(res){
+                            wx.hideLoading()
+                            console.log(res.fileID)
+                            that.setData({
+                                    orderImage: res.fileID
+                              })
+                      }
+                    })
               })
             },
             fail(res){

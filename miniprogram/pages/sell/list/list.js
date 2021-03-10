@@ -46,7 +46,7 @@ Page({
             let del = e.currentTarget.dataset.del;
             wx.showModal({
                   title: '温馨提示',
-                  content: '您确定要删除此条订单吗？',
+                  content: '您确定要删除此条信息吗？',
                   success(res) {
                         if (res.confirm) {
                               wx.showLoading({
@@ -64,6 +64,42 @@ Page({
                                           wx.hideLoading();
                                           wx.showToast({
                                                 title: '删除失败',
+                                                icon: 'none'
+                                          })
+                                    }
+                              })
+                        }
+                  }
+            })
+      },
+      //撤销
+      cancel(e) {
+            let that = this;
+            let cancel = e.currentTarget.dataset.cancel;
+            wx.showModal({
+                  title: '温馨提示',
+                  content: '信息撤销后将不会在首页展示，只能在【我的发布】中看到。您确定要撤销此条信息吗？',
+                  success(res) {
+                        if (res.confirm) {
+                              wx.showLoading({
+                                    title: '正在撤销'
+                              })
+                              db.collection('publish').doc(cancel._id).update({
+                                    data: {
+                                          canceled_at: new Date().getTime(),
+                                          status:1
+                                    },
+                                    success() {
+                                          wx.hideLoading();
+                                          wx.showToast({
+                                                title: '撤销成功',
+                                          })
+                                          that.getList();
+                                    },
+                                    fail() {
+                                          wx.hideLoading();
+                                          wx.showToast({
+                                                title: '撤销失败',
                                                 icon: 'none'
                                           })
                                     }
@@ -112,16 +148,9 @@ Page({
       detail(e) {
             let that = this;
             let detail = e.currentTarget.dataset.detail;
-            if (detail.status == 0) {
-                  wx.navigateTo({
-                        url: '/pages/detail/detail?scene=' + detail._id,
-                  })
-            }
-            if (detail.status == 1) {
-                  wx.navigateTo({
-                        url: '/pages/sell/detail/detail?id=' + detail._id,
-                  })
-            }
+            wx.navigateTo({
+                  url: '/pages/detail/detail?scene=' + detail._id,
+            })
       },
       //下拉刷新
       onPullDownRefresh() {

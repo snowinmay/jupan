@@ -35,6 +35,10 @@
       color: #f80202;
 }
 
+.text-yellow {
+      color: #ff9800;
+}
+
 .a1 image {
       width: 32rpx;
       height: 32rpx;
@@ -119,6 +123,11 @@
 }
 
 .bg-yellow {
+      background: #ff9800;
+      color: #fff;
+}
+
+.bg-green {
       background: #07c160;
       color: #fff;
 }

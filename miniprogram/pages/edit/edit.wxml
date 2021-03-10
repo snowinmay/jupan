@@ -14,7 +14,7 @@
       </view>
       <!--底部确认-->
       <button class="confirm" open-type='getUserInfo' bindgetuserinfo="getUserInfo">提交修改</button>
-      <button class="loginout" bindtap="loginout">退出登陸</button>
+      <button style="display:none;" class="loginout" bindtap="loginout">退出登陸</button>
       <view class="shen_title">
             <image class="about" src="/images/about.png" />使用申明
       </view>

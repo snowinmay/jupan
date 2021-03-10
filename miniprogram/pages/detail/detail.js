@@ -224,7 +224,7 @@ Page({
       },
       onShareAppMessage() {
             return {
-                  title: '这本《' + this.data.bookinfo.title + '》只要￥' + this.data.publishinfo.price + '元，快来看看吧',
+                  title: this.data.publishinfo.myTicketInfo.showName + '，只要' + this.data.publishinfo.price + '元，快来看看吧',
                   path: '/pages/detail/detail?scene=' + this.data.publishinfo._id,
             }
       },

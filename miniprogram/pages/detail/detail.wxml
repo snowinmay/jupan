@@ -8,7 +8,7 @@
                   </view>
             </view>
             <view class="list_between">
-                  <view class="list_price">售价：￥{{publishinfo.price}}<span class="list_pay"> 实付：￥{{publishinfo.myTicketInfo.pay}}</span></view>
+                  <view class="list_price">转让价：￥{{publishinfo.price}}<span class="list_pay"> 实付：￥{{publishinfo.myTicketInfo.pay}}</span></view>
                   <view class="list_time">{{morejs.timelog(publishinfo.creat )}}发布
                   </view>
             </view>

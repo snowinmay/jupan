@@ -3,7 +3,7 @@
       <block wx:for="{{list}}" wx:key="_id">
             <view class="card" bindtap="detail" data-detail="{{item}}">
                   <view class="a">
-                        <view class="a1 {{item.status==1?'text-red':''}}">
+                        <view class="a1 {{item.status==1?'text-yellow':''}}">
                               <image lazy-load src="/images/onsell.png"></image>
                               {{item.status==0?'已发布':'已撤销'}}
                         </view>
@@ -18,8 +18,9 @@
                         </view>
                   </view>
                   <view class="c">
-                        <view class="c1 bg-grey" catchtap="del" data-del="{{item}}" wx:if="{{item.status!==1}}">删除</view>
-                        <view class="c1 bg-yellow" wx:if="{{item.status==0}}" catchtap="crash" data-crash="{{item}}">擦亮</view>
+                        <view class="c1 bg-grey" catchtap="del" data-del="{{item}}">删除</view>
+                        <view class="c1 bg-yellow" catchtap="cancel" data-cancel="{{item}}" wx:if="{{item.status!==1}}">撤销</view>
+                        <view class="c1 bg-green" wx:if="{{item.status==0}}" catchtap="crash" data-crash="{{item}}">擦亮</view>
                   </view>
             </view>
       </block>

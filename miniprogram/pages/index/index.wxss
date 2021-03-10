@@ -39,7 +39,7 @@
       width: 100%;
       display: flex;
       box-sizing: border-box;
-      height: 160rpx;
+      height: 230rpx;
 }
 
 .banner_image {
@@ -47,7 +47,7 @@
       padding: 16rpx;
       display: flex;
       box-sizing: border-box;
-      height: 160rpx;
+      height: 230rpx;
 }
 
 ::-webkit-scrollbar {

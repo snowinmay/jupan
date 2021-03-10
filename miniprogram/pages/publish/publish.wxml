@@ -120,6 +120,7 @@
                         </view>
                         <view class="b_text" wx:if="{{orderImage}}">
                         <image style="width:100%;" mode="aspectFill" src="{{orderImage}}"></image>
+                        <image class="b_del" bindtap="delImg" src="/images/del.png"></image>
                         </view>
                   </view>
                   <view class="b_border"></view>
