@@ -582,6 +582,7 @@ Page({
       upImg(){
           var that = this;
           wx.chooseImage({
+            sizeType: ['compressed'],
             count: 1,
             success(res){
               console.log(res);
