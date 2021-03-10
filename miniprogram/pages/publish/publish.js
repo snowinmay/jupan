@@ -34,7 +34,7 @@ Page({
                   quantity: 1,//数量
                   contact:'',//联系方式
                   orderImage:'',//实付截图"cloud://aikan-4gyg06pf350949b1.6169-aikan-4gyg06pf350949b1-1305127265/uploads/422561"
-                  contactIndex:-1,
+                  contactIndex:3,
                   show_a: true,
                   show_b: false,
                   show_c: false,

@@ -10,6 +10,7 @@ Page({
             poster: JSON.parse(config.data).share_poster,
       },
       onShow() {
+            console.log(app.userinfo)
             this.setData({
                   userinfo: app.userinfo
             })

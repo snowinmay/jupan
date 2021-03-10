@@ -104,6 +104,7 @@ Page({
               complete:res=>{
                 console.log('云函数获取到的openid:',res.result.openid)
                 var openid = res.result.openid;
+                app.openid = openid
                 that.setData({
                   openid:openid
                 })
@@ -130,12 +131,24 @@ Page({
       //校检
       check() {
             let that = this;
+            //校检微博
+            let weibo = that.data.weibo;
+            if (weibo !== '') {
+                  if (!(/@([a-zA-Z0-9_]+|\W+|[^x00-xff]+)/.test(weibo))) {
+                        wx.showToast({
+                              title: '请输入正确的微博昵称',
+                              icon: 'none',
+                              duration: 2000
+                        });
+                        return false;
+                  }
+            }
             //校检QQ号
             let qqnum = that.data.qqnum;
             if (qqnum !== '') {
                   if (!(/^\s*[.0-9]{5,11}\s*$/.test(qqnum))) {
                         wx.showToast({
-                              title: '请输入正确QQ号',
+                              title: '请输入正确的QQ号',
                               icon: 'none',
                               duration: 2000
                         });
@@ -147,7 +160,7 @@ Page({
             if (wxnum !== '') {
                   if (!(/^[a-zA-Z]([-_a-zA-Z0-9]{5,19})+$/.test(wxnum))) {
                         wx.showToast({
-                              title: '请输入正确微信号',
+                              title: '请输入正确的微信号',
                               icon: 'none',
                               duration: 2000
                         });
@@ -158,18 +171,7 @@ Page({
                   title: '正在提交',
             })
 
-            // console.log('云函数获取到的openid:',this.data.openid)
-            db.collection('user').where({
-              _openid: this.data.openid
-            })
-            .get({
-              success: function(res) {
-                // res.data 是包含以上定义的两条记录的数组
-                console.log(res.data)
-              }
-            })
-            return false
-            db.collection('user').add({
+            var object = {
                   data: {
                         qqnum: that.data.qqnum,
                         weibo: that.data.weibo,
@@ -183,6 +185,7 @@ Page({
                         console.log(res)
                         db.collection('user').doc(res._id).get({
                               success: function(res) {
+                                    wx.hideLoading();
                                     app.userinfo = res.data;
                                     app.openid = res.data._openid;
                                     wx.navigateBack({})
@@ -192,10 +195,27 @@ Page({
                   fail() {
                         wx.hideLoading();
                         wx.showToast({
-                              title: '注册失败，请重新提交',
+                              title: '登陆失败，请重新提交',
                               icon: 'none',
                         })
                   }
+            }
+            db.collection('user').where({
+              _openid: this.data.openid
             })
+            .get({
+              success: function(res) {
+                // res.data 是包含以上定义的两条记录的数组
+                console.log(res.data)
+                if ((res.data.length>0)) {
+                  let id = res.data[0]._id
+                  db.collection('user').doc(id).update(object)
+                } else {
+                  db.collection('user').add(object)
+                }
+              }
+            })
+            return false
+            
       },
 })
