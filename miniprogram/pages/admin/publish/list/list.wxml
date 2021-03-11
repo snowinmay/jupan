@@ -10,16 +10,24 @@
                         <view class="a2">{{morejs.timelog(item.creat)}}</view>
                   </view>
                   <view class="list_content">
+                        <image style="width:100%;" mode="widthFix" lazy-load src="{{item.orderImage}}"></image>
                         <view class="list_word">
-                              <view class="list_title"><span class="title_icon">我有</span>{{item.myTicketInfo.showName}},票面：<span class="list_oprice">￥{{item.myTicketInfo.originalPrice}} X {{item.quantity}}</span>
+                              <view class="list_title">{{item.myTicketInfo.showName}},票面：<span class="list_oprice">￥{{item.myTicketInfo.originalPrice}} X {{item.quantity}}</span>
                               </view>
-                              <view class="list_author text-cut">场次：{{item.myTicketInfo.sessionName}}{{item.myTicketInfo.venueName}}
+                              <view class="list_author">场次：{{item.myTicketInfo.sessionName}}{{item.myTicketInfo.venueName}}
                               </view>
+                              <view class="list_author">联系方式：{{item.contact}}
+                              </view>
+                              <view class="list_author">备注信息：{{item.notes}}
+                              </view>
+                        </view>
+                        <view class="list_between">
+                              <view class="list_price">转让价：￥{{item.price}}<span class="list_pay"> 实付：￥{{item.myTicketInfo.pay}}</span></view>
                         </view>
                   </view>
                   <view class="c">
-                        <view class="c1 bg-grey" catchtap="del" data-del="{{item}}" wx:if="{{item.status!==1}}">删除</view>
-                        <view class="c1 bg-yellow" wx:if="{{item.status==0}}" catchtap="crash" data-crash="{{item}}">擦亮</view>
+                        <view class="c1 bg-grey" catchtap="del" data-del="{{item}}">删除</view>
+                        <view class="c1 bg-yellow" catchtap="cancel" data-cancel="{{item}}">撤销</view>
                   </view>
             </view>
       </block>

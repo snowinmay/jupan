@@ -75,8 +75,15 @@ Page({
                   }],
             })
       },
+      dy(){
+        wx.requestSubscribeMessage({
+          tmplIds: ['7wC-_oB10pdLxwoZa3JGkgzKLdwudg9Y3fq7-m4GUsY'],
+          success (res) { }
+        })
+      },
       onLoad() {
             this.initial();
+            
       },
       onShow(){
             console.log(app.userinfo)
@@ -472,7 +479,7 @@ Page({
             let that = this;
             wx.showModal({
                   title: '温馨提示',
-                  content: '经检测您填写的信息无误，是否马上发布？',
+                  content: '是否马上发布？',
                   success(res) {
                         if (res.confirm) {
                               console.log(that.data.selectShow)
@@ -514,11 +521,19 @@ Page({
                                           wx.pageScrollTo({
                                                 scrollTop: 0,
                                           })
+                                          that.subscribeOrderMessage()
+
                                     }
                               })
                         }
                   }
             })
+      },
+      subscribeOrderMessage(){
+        wx.requestSubscribeMessage({
+          tmplIds: ['7wC-_oB10pdLxwoZa3JGkgzKLdwudg9Y3fq7-m4GUsY'],
+          success (res) { }
+        })
       },
       select(e){
             console.log(this.data)

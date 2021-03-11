@@ -71,6 +71,58 @@ Page({
                   }
             })
       },
+      //撤销
+      cancel(e) {
+            let that = this;
+            let cancel = e.currentTarget.dataset.cancel;
+            wx.showModal({
+                  title: '温馨提示',
+                  content: '信息撤销后将不会在首页展示，只能在【我的发布】中看到。您确定要撤销此条信息吗？',
+                  success(res) {
+                        if (res.confirm) {
+                              wx.showLoading({
+                                    title: '正在撤销'
+                              })
+                              db.collection('publish').doc(cancel._id).update({
+                                    data: {
+                                          canceled_at: new Date().getTime(),
+                                          status:1
+                                    },
+                                    success() {
+                                          wx.hideLoading();
+                                          wx.showToast({
+                                                title: '撤销成功',
+                                          })
+                                          that.getList();
+                                          //给用户发送撤销的消息
+                                          that.sendMessageToAuthor(cancel)
+                                    },
+                                    fail() {
+                                          wx.hideLoading();
+                                          wx.showToast({
+                                                title: '撤销失败',
+                                                icon: 'none'
+                                          })
+                                    }
+                              })
+                        }
+                  }
+            })
+      },
+      sendMessageToAuthor(item){
+               wx.cloud.callFunction({
+                  name: 'messageSend',
+                  data:{
+                    'id': item._id,
+                    'reason': '你发布的宝贝符合规则',
+                    'time': new Date().getTime(),
+                    'title': item.myTicketInfo.showName,
+                    'remark': '请上传真实的包含实付价格的截图'
+                  }    
+                }).then(res=>{
+                     
+                })  
+      },
       //擦亮
       crash(e) {
             let that = this;
