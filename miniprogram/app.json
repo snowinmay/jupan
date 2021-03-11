@@ -21,7 +21,9 @@
             "pages/searchShow/searchShow",
             "pages/edit/edit",
             "pages/web/web",
-            "pages/poster/poster"
+            "pages/poster/poster",
+            "pages/admin/publish/detail/detail",
+            "pages/admin/publish/list/list"
       ],
       "window": {
             "backgroundColor": "#07c160",

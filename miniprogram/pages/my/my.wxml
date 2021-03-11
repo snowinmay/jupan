@@ -43,6 +43,13 @@
             <image src="/images/go.png"></image>
             <button open-type="feedback"></button>
       </view>
+      <view class="bottom_card" wx:if="{{isAdmin}}"  bindtap="go" data-go="/pages/admin/publish/list/list">
+            <view class="bottom_1">
+                  <image src="/images/guanyu.png"></image>
+                  <view>内容审核</view>
+            </view>
+            <image src="/images/go.png"></image>
+      </view>
       <view style="display:none" class="bottom_card" bindtap="go" data-go="/pages/about/about">
             <view class="bottom_1">
                   <image src="/images/guanyu.png"></image>
