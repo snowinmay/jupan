@@ -6,6 +6,7 @@ Page({
        * 页面的初始数据
        */
       data: {
+            isAdmin:false,
             showShare: false,
             poster: JSON.parse(config.data).share_poster,
       },
@@ -14,6 +15,16 @@ Page({
             this.setData({
                   userinfo: app.userinfo
             })
+            this.checkAdmin()
+      },
+      checkAdmin(){
+            let roles =  this.data.userinfo.roles
+            if (roles && roles.indexOf('admin')>=0) {
+                  console.log(roles)
+                  this.setData({
+                        isAdmin:true
+                  })
+            }
       },
       go(e) {
             if (e.currentTarget.dataset.status == '1') {
