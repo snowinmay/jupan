@@ -12,6 +12,7 @@ Page({
             page: 1,
             scrollTop: 0,
             nomore: false,
+            collegeCur:-1
       },
 
       /**
@@ -25,7 +26,13 @@ Page({
       },
       getList() {
             let that = this;
+            if (that.data.collegeCur == -1) {
+                  var kindid = _.neq(-1); //除-2之外所有
+            } else {
+                  var kindid = parseInt(that.data.collegeCur) //小程序搜索必须对应格式
+            }
             db.collection('publish').where({
+                  status: kindid
             }).orderBy('creat', 'desc').limit(20).get({
                   success: function(res) {
                         wx.hideLoading();
@@ -38,6 +45,24 @@ Page({
                         console.log(res.data)
                   }
             })
+      },
+      //学院选择
+      collegeSelect(e) {
+            this.setData({
+                  collegeCur: e.currentTarget.dataset.id,
+                  scrollLeft: (e.currentTarget.dataset.id - 3) * 100,
+                  showList: false,
+            })
+            this.getList();
+      },
+      //选择全部
+      selectAll() {
+            this.setData({
+                  collegeCur: -1,
+                  scrollLeft: -200,
+                  showList: false,
+            })
+            this.getList();
       },
       //删除
       del(e) {
@@ -163,16 +188,9 @@ Page({
       detail(e) {
             let that = this;
             let detail = e.currentTarget.dataset.detail;
-            if (detail.status == 0) {
-                  wx.navigateTo({
-                        url: '/pages/detail/detail?scene=' + detail._id,
-                  })
-            }
-            if (detail.status == 1) {
-                  wx.navigateTo({
-                        url: '/pages/sell/detail/detail?id=' + detail._id,
-                  })
-            }
+            wx.navigateTo({
+                  url: '/pages/detail/detail?scene=' + detail._id,
+            })
       },
       //下拉刷新
       onPullDownRefresh() {

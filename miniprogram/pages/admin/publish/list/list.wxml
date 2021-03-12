@@ -1,4 +1,19 @@
 <wxs src="../../../../common.wxs" module="morejs" />
+<!--分类导航-->
+<view class="{{scrollTop>310?'nofixed':''}}">
+</view>
+<view class="kind_contain {{scrollTop>310?'fixed':''}}">
+      <view class="nav-item {{-1==collegeCur?'tab-on':''}}" bindtap="selectAll">
+            <view class="nav-text">全部</view>
+      </view>
+      <view class="nav-item" bindtap="collegeSelect" data-id="0">
+            <view class="nav-text {{0==collegeCur?'tab-on':''}}">最新发布</view>
+      </view>
+      <view class="nav-item" bindtap="collegeSelect" data-id="1">
+            <view class="nav-text {{1==collegeCur?'tab-on':''}}">已撤销</view>
+      </view>
+</view>
+<view class="space"></view>
 <view class="contain" wx:if="{{list.length!==0}}">
       <block wx:for="{{list}}" wx:key="_id">
             <view class="card" bindtap="detail" data-detail="{{item}}">
@@ -9,22 +24,25 @@
                         </view>
                         <view class="a2">{{morejs.timelog(item.creat)}}</view>
                   </view>
-                  <view class="list_content">
-                        <image style="width:100%;" mode="widthFix" lazy-load src="{{item.orderImage}}"></image>
-                        <view class="list_word">
-                              <view class="list_title">{{item.myTicketInfo.showName}},票面：<span class="list_oprice">￥{{item.myTicketInfo.originalPrice}} X {{item.quantity}}</span>
+                  <view class="list_box">
+                        <image class="list_poster" lazy-load src="{{item.orderImage}}"></image>
+                        <view class="list_content">
+                              <view class="list_word">
+                                    <view class="list_title">{{item.myTicketInfo.showName}}
+                                    </view>
+                                    <view class="list_author">场次：{{item.myTicketInfo.sessionName}}{{item.myTicketInfo.venueName}}
+                                    </view>
+                                    <view class="list_author">联系方式：{{item.contact}}
+                                    </view>
+                                    <view class="list_author">备注信息：{{item.notes}}
+                                    </view>
                               </view>
-                              <view class="list_author">场次：{{item.myTicketInfo.sessionName}}{{item.myTicketInfo.venueName}}
+                              <view class="list_between">
+                                    <view class="list_price"><span class="list_oprice">票面：￥{{item.myTicketInfo.originalPrice}} X {{item.quantity}}</span>转让价：￥{{item.price}}<span class="list_pay"> 实付：￥{{item.myTicketInfo.pay}}</span></view>
                               </view>
-                              <view class="list_author">联系方式：{{item.contact}}
-                              </view>
-                              <view class="list_author">备注信息：{{item.notes}}
-                              </view>
-                        </view>
-                        <view class="list_between">
-                              <view class="list_price">转让价：￥{{item.price}}<span class="list_pay"> 实付：￥{{item.myTicketInfo.pay}}</span></view>
                         </view>
                   </view>
+                  
                   <view class="c">
                         <view class="c1 bg-grey" catchtap="del" data-del="{{item}}">删除</view>
                         <view class="c1 bg-yellow" catchtap="cancel" data-cancel="{{item}}">撤销</view>

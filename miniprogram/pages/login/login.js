@@ -179,6 +179,7 @@ Page({
                         stamp: new Date().getTime(),
                         info: that.data.userInfo,
                         useful: true,
+                        isAdmin:false,
                         parse: 0,
                   },
                   success: function(res) {
