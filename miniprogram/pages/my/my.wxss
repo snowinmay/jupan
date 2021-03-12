@@ -204,7 +204,7 @@ page {
       border-left: 1rpx solid #e7e7e7;
 }
 .logo{
-    margin-top: 100rpx;
+    margin-top: 200rpx;
     display: flex;
     justify-content: center;
 }
