@@ -18,6 +18,7 @@ Page({
             this.checkAdmin()
       },
       checkAdmin(){
+            console.log(this.data.userinfo.isAdmin)
             this.setData({
                   isAdmin:this.data.userinfo.isAdmin
             })

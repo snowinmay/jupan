@@ -58,6 +58,9 @@
             <image src="/images/go.png"></image>
       </view>
 </view>
+ <view  class="logo">
+      <image src="/images/logo.png"></image>
+</view>
 
 <!--分享弹出层-->
 <van-popup show="{{ showShare }}" bind:close="closePop">
