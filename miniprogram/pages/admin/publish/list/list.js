@@ -108,21 +108,28 @@ Page({
                               wx.showLoading({
                                     title: '正在撤销'
                               })
-                              db.collection('publish').doc(cancel._id).update({
+                              wx.cloud.callFunction({
+                                    name: 'publish',
                                     data: {
-                                          canceled_at: new Date().getTime(),
-                                          status:1
+                                          $url: "cancel", //云函数路由参数
+                                          _id: cancel._id,
+                                          _openid: app.openid,
+                                          status:1,
                                     },
-                                    success() {
-                                          wx.hideLoading();
-                                          wx.showToast({
-                                                title: '撤销成功',
-                                          })
-                                          that.getList();
-                                          //给用户发送撤销的消息
-                                          that.sendMessageToAuthor(cancel)
+                                    success: res => {
+                                          console.log(res)
+                                          if (res.result.body.status == 0) {
+                                                wx.hideLoading();
+                                                wx.showToast({
+                                                      title: '撤销成功',
+                                                })
+                                                that.getList();
+                                                //给用户发送撤销的消息
+                                                // that.sendMessageToAuthor(cancel)
+                                          }
                                     },
-                                    fail() {
+                                    fail: err => {
+                                          console.error(err)
                                           wx.hideLoading();
                                           wx.showToast({
                                                 title: '撤销失败',
@@ -130,6 +137,32 @@ Page({
                                           })
                                     }
                               })
+                              // db.collection('publish').doc(cancel._id).update({
+                              // db.collection('publish').where({
+                              //       _id: cancel._id,
+                              //       _openid: app.openid,
+                              // }).update({
+                              //       data: {
+                              //             canceled_at: new Date().getTime(),
+                              //             status:1
+                              //       },
+                              //       success() {
+                              //             wx.hideLoading();
+                              //             wx.showToast({
+                              //                   title: '撤销成功',
+                              //             })
+                              //             that.getList();
+                              //             //给用户发送撤销的消息
+                              //             that.sendMessageToAuthor(cancel)
+                              //       },
+                              //       fail() {
+                              //             wx.hideLoading();
+                              //             wx.showToast({
+                              //                   title: '撤销失败',
+                              //                   icon: 'none'
+                              //             })
+                              //       }
+                              // })
                         }
                   }
             })
