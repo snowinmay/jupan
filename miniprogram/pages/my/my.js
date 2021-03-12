@@ -18,13 +18,9 @@ Page({
             this.checkAdmin()
       },
       checkAdmin(){
-            let roles =  this.data.userinfo.roles
-            if (roles && roles.indexOf('admin')>=0) {
-                  console.log(roles)
-                  this.setData({
-                        isAdmin:true
-                  })
-            }
+            this.setData({
+                  isAdmin:this.data.userinfo.isAdmin
+            })
       },
       go(e) {
             if (e.currentTarget.dataset.status == '1') {
