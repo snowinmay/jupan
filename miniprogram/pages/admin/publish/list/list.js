@@ -108,25 +108,25 @@ Page({
                               wx.showLoading({
                                     title: '正在撤销'
                               })
+
                               wx.cloud.callFunction({
-                                    name: 'publish',
-                                    data: {
-                                          $url: "cancel", //云函数路由参数
-                                          _id: cancel._id,
-                                          _openid: app.openid,
-                                          status:1,
-                                    },
-                                    success: res => {
+                                 // 云函数名称
+                                 name: 'cancelP',
+                                 // 传给云函数的参数
+                                 data: {
+                                    _id: cancel._id,
+                                    _openid: app.openid,
+                                    status:1,
+                                 },
+                                 success: res => {
                                           console.log(res)
-                                          if (res.result.body.status == 0) {
-                                                wx.hideLoading();
-                                                wx.showToast({
-                                                      title: '撤销成功',
-                                                })
-                                                that.getList();
-                                                //给用户发送撤销的消息
-                                                // that.sendMessageToAuthor(cancel)
-                                          }
+                                          wx.hideLoading();
+                                          wx.showToast({
+                                                title: '撤销成功',
+                                          })
+                                          that.getList();
+                                          //给用户发送撤销的消息
+                                          that.sendMessageToAuthor(cancel)
                                     },
                                     fail: err => {
                                           console.error(err)
@@ -137,6 +137,33 @@ Page({
                                           })
                                     }
                               })
+                              // wx.cloud.callFunction({
+                              //       name: 'publish',
+                              //       data: {
+                              //             $url: "cancel", //云函数路由参数
+                              //             _id: cancel._id,
+                              //             _openid: app.openid,
+                              //             status:1,
+                              //       },
+                              //       success: res => {
+                              //             console.log(res)
+                              //             wx.hideLoading();
+                              //             wx.showToast({
+                              //                   title: '撤销成功',
+                              //             })
+                              //             that.getList();
+                              //             //给用户发送撤销的消息
+                              //             // that.sendMessageToAuthor(cancel)
+                              //       },
+                              //       fail: err => {
+                              //             console.error(err)
+                              //             wx.hideLoading();
+                              //             wx.showToast({
+                              //                   title: '撤销失败',
+                              //                   icon: 'none'
+                              //             })
+                              //       }
+                              // })
                               // db.collection('publish').doc(cancel._id).update({
                               // db.collection('publish').where({
                               //       _id: cancel._id,
@@ -178,7 +205,7 @@ Page({
                     'remark': '请上传真实的包含实付价格的截图'
                   }    
                 }).then(res=>{
-                     
+                     console.log(res)
                 })  
       },
       //擦亮

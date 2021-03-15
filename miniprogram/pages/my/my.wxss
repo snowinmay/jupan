@@ -209,6 +209,6 @@ page {
     justify-content: center;
 }
 .logo image{
-      width:330rpx;
-      height:90rpx;
+      width:308rpx;
+      height:84rpx;
 }

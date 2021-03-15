@@ -78,7 +78,12 @@ Page({
       dy(){
         wx.requestSubscribeMessage({
           tmplIds: ['7wC-_oB10pdLxwoZa3JGkgzKLdwudg9Y3fq7-m4GUsY'],
-          success (res) { }
+          success (res) {
+            console.log(res)
+          },
+          fail(res){
+            console.log(res)
+          }
         })
       },
       onLoad() {
