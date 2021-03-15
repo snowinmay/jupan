@@ -40,6 +40,11 @@ var data = {
             //       id: 1
             // }
       ],
+      subscribeIds:{
+            'activityStart':'Paxescjrb7D-nHphqurmSrUmQhStDmekjGHVNr_3r_k',
+            'goodsOn':'oQU1_dIR318I7sOu-UhJkIM4WQMOP3tP6zx6ZMtdQIc',
+            'orderStatus':'GXr22RQxNU7C3SIpXWHS0ccbbeKZdl4Hq1nOmOz5hUo',
+      }
 }
 //下面的就别动了
 function formTime(creatTime) {

@@ -87,7 +87,16 @@ Page({
         })
       },
       onLoad() {
-            this.initial();
+        let that = this
+        this.initial();
+        wx.getSetting({
+           withSubscriptions: true,
+           success(res) {
+             console.log(res)
+             that.subscriptionsSettings = res.subscriptionsSetting.itemSettings
+           }
+         })
+
             
       },
       onShow(){
@@ -405,6 +414,9 @@ Page({
                   });
                   return false;
             }
+            wx.showLoading({
+              title: '发布中',
+            })
             this.checkContent(function(){
                   that.publish();
             })
@@ -414,7 +426,7 @@ Page({
                 title: '正在审核',
               })
               //获取图片的临时路径
-              const tempFilePaths = res.tempFilePaths[0]
+              const tempFilePaths = res.tempFilePath
               //使用getFileSystemManager获取图片的Buffer流
               wx.getFileSystemManager().readFile({
                 filePath: tempFilePaths,                   
@@ -443,9 +455,9 @@ Page({
                   })
                 },
                 fail(res){
-                      console.log(res)
-                      wx.hideLoading()
-                  }
+                  console.log(res)
+                  wx.hideLoading()
+                }
               })
         },
       checkContent(cb){
@@ -453,9 +465,9 @@ Page({
           let that = this
           let content = that.data.selectShow.showName+that.data.selectShow.venueName+that.data.selectShow.sessionName+that.data.contact+that.data.notes
           console.log(content)
-          wx.showLoading({
-            title: '内容审核中',
-          })
+          // wx.showLoading({
+          //   title: '内容审核中',
+          // })
           //调用云函数进行审核
           wx.cloud.callFunction({
             name: 'contentCheck',
@@ -475,69 +487,128 @@ Page({
                 confirmColor: '#DC143C'
               })
             }else{
-                  cb()
+              cb()
             }      
           })  
       },
       //正式发布
       publish() {
             let that = this;
-            wx.showModal({
-                  title: '温馨提示',
-                  content: '是否马上发布？',
-                  success(res) {
-                        if (res.confirm) {
-                              console.log(that.data.selectShow)
-                              db.collection('publish').add({
-                                    data: {
-                                          creat: new Date().getTime(),
-                                          dura: new Date().getTime() + that.data.dura * (24 * 60 * 60 * 1000),
-                                          status: 0, //0在售；1买家已付款，但卖家未发货；2买家确认收获，交易完成；3、交易作废，退还买家钱款
-                                          price: that.data.price, //售价
-                                          contact: that.data.contactType[that.data.contactIndex].name + "：" + that.data.contact, //联系方式
-                                          quantity: that.data.quantity, //数量
-                                          //分类
-                                          kindid: that.data.kindid, //出票，换票，求票，赠票
-                                          notes: that.data.notes, //备注
-                                          orderImage: that.data.orderImage, //备注
-                                          key: that.data.selectShow.showName+that.data.selectShow.venueName+that.data.selectShow.sessionName, //备注
-                                          myTicketInfo: {
-                                                pay:that.data.selectShow.pay,
-                                                originalPrice:that.data.selectShow.originalPrice,
-                                                showDate: that.data.selectShow.showDate,
-                                                showName: that.data.selectShow.showName,
-                                                showOID: that.data.selectShow.showOID,
-                                                sessionName: that.data.selectShow.sessionName,
-                                                showSessionOID: that.data.selectShow.showSessionOID,
-                                                venueName: that.data.selectShow.venueName
-                                          },
-                                          // key: that.data.bookinfo.title + that.data.bookinfo.keyword
-                                    },
-                                    success(e) {
-                                          console.log(e)
-                                          that.setData({
-                                                show_a: false,
-                                                show_b: false,
-                                                show_c: true,
-                                                active: 2,
-                                                detail_id: e._id
-                                          });
-                                          //滚动到顶部
-                                          wx.pageScrollTo({
-                                                scrollTop: 0,
-                                          })
-                                          that.subscribeOrderMessage()
+            db.collection('publish').add({
+              data: {
+                    creat: new Date().getTime(),
+                    dura: new Date().getTime() + that.data.dura * (24 * 60 * 60 * 1000),
+                    status: 0, //0在售；1买家已付款，但卖家未发货；2买家确认收获，交易完成；3、交易作废，退还买家钱款
+                    price: that.data.price, //售价
+                    contact: that.data.contactType[that.data.contactIndex].name + "：" + that.data.contact, //联系方式
+                    quantity: that.data.quantity, //数量
+                    //分类
+                    kindid: that.data.kindid, //出票，换票，求票，赠票
+                    notes: that.data.notes, //备注
+                    orderImage: that.data.orderImage, //备注
+                    key: that.data.selectShow.showName+that.data.selectShow.venueName+that.data.selectShow.sessionName, //备注
+                    myTicketInfo: {
+                          pay:that.data.selectShow.pay,
+                          originalPrice:that.data.selectShow.originalPrice,
+                          showDate: that.data.selectShow.showDate,
+                          showName: that.data.selectShow.showName,
+                          showOID: that.data.selectShow.showOID,
+                          sessionName: that.data.selectShow.sessionName,
+                          showSessionOID: that.data.selectShow.showSessionOID,
+                          venueName: that.data.selectShow.venueName
+                    },
+                    // key: that.data.bookinfo.title + that.data.bookinfo.keyword
+              },
+              success(e) {
+                    console.log(e)
+                    wx.hideLoading()
+                    that.setData({
+                          show_a: false,
+                          show_b: false,
+                          show_c: true,
+                          active: 2,
+                          detail_id: e._id
+                    });
+                    //滚动到顶部
+                    wx.pageScrollTo({
+                          scrollTop: 0,
+                    })
 
-                                    }
-                              })
-                        }
-                  }
-            })
+              }
+        })
+            // wx.showModal({
+            //       title: '温馨提示',
+            //       content: '是否马上发布？',
+            //       success(res) {
+            //         return false
+            //             if (res.confirm) {
+            //                   console.log(that.data.selectShow)
+                              // db.collection('publish').add({
+                              //       data: {
+                              //             creat: new Date().getTime(),
+                              //             dura: new Date().getTime() + that.data.dura * (24 * 60 * 60 * 1000),
+                              //             status: 0, //0在售；1买家已付款，但卖家未发货；2买家确认收获，交易完成；3、交易作废，退还买家钱款
+                              //             price: that.data.price, //售价
+                              //             contact: that.data.contactType[that.data.contactIndex].name + "：" + that.data.contact, //联系方式
+                              //             quantity: that.data.quantity, //数量
+                              //             //分类
+                              //             kindid: that.data.kindid, //出票，换票，求票，赠票
+                              //             notes: that.data.notes, //备注
+                              //             orderImage: that.data.orderImage, //备注
+                              //             key: that.data.selectShow.showName+that.data.selectShow.venueName+that.data.selectShow.sessionName, //备注
+                              //             myTicketInfo: {
+                              //                   pay:that.data.selectShow.pay,
+                              //                   originalPrice:that.data.selectShow.originalPrice,
+                              //                   showDate: that.data.selectShow.showDate,
+                              //                   showName: that.data.selectShow.showName,
+                              //                   showOID: that.data.selectShow.showOID,
+                              //                   sessionName: that.data.selectShow.sessionName,
+                              //                   showSessionOID: that.data.selectShow.showSessionOID,
+                              //                   venueName: that.data.selectShow.venueName
+                              //             },
+                              //             // key: that.data.bookinfo.title + that.data.bookinfo.keyword
+                              //       },
+                              //       success(e) {
+                              //             console.log(e)
+                              //             that.setData({
+                              //                   show_a: false,
+                              //                   show_b: false,
+                              //                   show_c: true,
+                              //                   active: 2,
+                              //                   detail_id: e._id
+                              //             });
+                              //             //滚动到顶部
+                              //             wx.pageScrollTo({
+                              //                   scrollTop: 0,
+                              //             })
+
+                              //       }
+                              // })
+            //             }
+            //       }
+            // })
       },
       subscribeOrderMessage(){
+        //subscribeIds:{
+      //       'activityStart':'Paxescjrb7D-nHphqurmSrUmQhStDmekjGHVNr_3r_k',
+      //       'goodsOn':'oQU1_dIR318I7sOu-UhJkIM4WQMOP3tP6zx6ZMtdQIc',
+      //       'orderStatus':'GXr22RQxNU7C3SIpXWHS0ccbbeKZdl4Hq1nOmOz5hUo',
+      // }
+        let that = this
+        let subscribeIds = JSON.parse(config.data).subscribeIds
+        console.log(subscribeIds)
         wx.requestSubscribeMessage({
-          tmplIds: ['7wC-_oB10pdLxwoZa3JGkgzKLdwudg9Y3fq7-m4GUsY'],
-          success (res) { }
+          tmplIds: [subscribeIds.activityStart,subscribeIds.goodsOn,subscribeIds.orderStatus],
+          success (res) {
+            console.log("success")
+            console.log(res)
+            that.check_pub()
+          },
+          fail (res) {
+            console.log("fail")
+            console.log(res)
+            that.check_pub()
+          },
         })
       },
       select(e){
@@ -600,27 +671,35 @@ Page({
 
       },
       upImg(){
+
           var that = this;
           wx.chooseImage({
             sizeType: ['compressed'],
             count: 1,
-            success(res){
-              console.log(res);
-              that.imgCheck(res,function(){
+            success(o_res){
+              console.log(o_res)
+             wx.compressImage({
+                src: o_res.tempFilePaths[0], // 图片路径
+                quality: 30, // 压缩质量
+                success(c_res){
+                  console.log(c_res)
+                  that.imgCheck(c_res,function(){
                     wx.showLoading({
                         title: '正在上传'
                     })
                     wx.cloud.uploadFile({
                       cloudPath:'uploads/' + Math.floor(Math.random()*1000000),
-                      filePath:res.tempFilePaths[0],
-                      success(res){
+                      filePath:c_res.tempFilePath,
+                      success(u_res){
                             wx.hideLoading()
-                            console.log(res.fileID)
+                            console.log(u_res.fileID)
                             that.setData({
-                                    orderImage: res.fileID
+                                    orderImage: u_res.fileID
                               })
                       }
                     })
+                  })
+                }
               })
             },
             fail(res){
