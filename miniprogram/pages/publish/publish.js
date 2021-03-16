@@ -393,14 +393,14 @@ Page({
                   });
                   return false;                  
             }
-            if (parseFloat(that.data.price)>parseFloat(that.data.selectShow.pay)) {
+            if (parseFloat(that.data.price)>(parseFloat(that.data.selectShow.pay))*that.data.quantity) {
                   wx.showToast({
                         title: '出票价格不能高于实付价格',
                         icon: 'none',
                   });
                   return false;
             }
-            if (parseFloat(that.data.price)>parseFloat(that.data.selectShow.originalPrice)) {
+            if (parseFloat(that.data.price)>(parseFloat(that.data.selectShow.originalPrice))*that.data.quantity) {
                   wx.showToast({
                         title: '出票价格不能高于票面价格',
                         icon: 'none',

@@ -48,7 +48,6 @@
            
             <view class="a_sao">
                   <button class="shadow" bindtap="select">补充详细信息</button>
-                  <button class="shadow" bindtap="dy">消息订阅</button>
             </view>
       </view>
 </van-transition>
