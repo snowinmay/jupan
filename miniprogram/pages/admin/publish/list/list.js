@@ -195,14 +195,17 @@ Page({
             })
       },
       sendMessageToAuthor(item){
+            console.log(item.myTicketInfo.showName)
                wx.cloud.callFunction({
                   name: 'messageSend',
                   data:{
                     'id': item._id,
-                    'reason': '你发布的宝贝符合规则',
+                    'templateId': JSON.parse(config.data).subscribeIds.orderStatus,
+                    'status': '已撤销',
+                    'price': item.price,
                     'time': new Date().getTime(),
-                    'title': item.myTicketInfo.showName,
-                    'remark': '请上传真实的包含实付价格的截图'
+                    'title': (item.myTicketInfo.showName).replace(/\s+/g,"").substr(0,20),//商品名称
+                    'remark': '请上传真实的包含实付价格的截图'//备注
                   }    
                 }).then(res=>{
                      console.log(res)

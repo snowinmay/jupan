@@ -9,23 +9,24 @@ exports.main = async (event, context) => {
   try {
     const result = await cloud.openapi.subscribeMessage.send({
         touser: cloud.getWXContext().OPENID,
-        page: 'pages/detail/detail/?id=',
+        page: '/pages/detail/detail?scene='+event.id,
         lang: 'zh_CN',
         data: {
-          thing1: {
-            value: event.reason//原因
-          },
-          time2: {
-            value: event.time//时间
-          },
-          thing3: {
-            value: event.remark//备注
-          },
-          thing4: {
+          thing6: {
             value: event.title//产品名称
+          },
+          amount4: {
+            value: event.price//订单金额
+          },
+          phrase3: {
+            value: event.status//状态
+          },
+          thing5: {
+            value: event.remark//备注
           }
         },
-        templateId: '7wC-_oB10pdLxwoZa3JGkgzKLdwudg9Y3fq7-m4GUsY',
+        // templateId: '7wC-_oB10pdLxwoZa3JGkgzKLdwudg9Y3fq7-m4GUsY',
+        templateId: event.templateId,
         miniprogramState: 'developer'
       })
     return result
