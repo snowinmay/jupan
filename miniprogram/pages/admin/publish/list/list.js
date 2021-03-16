@@ -202,6 +202,7 @@ Page({
                   data:{
                     'id': item._id,
                     'templateId': JSON.parse(config.data).subscribeIds.orderStatus,
+                    'env':JSON.parse(config.data).env,
                     'status': '已撤销',
                     'price': item.price,
                     'time': new Date().getTime(),
