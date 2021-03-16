@@ -117,6 +117,7 @@ Page({
                                     _id: cancel._id,
                                     _openid: app.openid,
                                     status:1,
+                                    env:JSON.parse(config.data).env,
                                  },
                                  success: res => {
                                           console.log(res)
@@ -126,7 +127,7 @@ Page({
                                           })
                                           that.getList();
                                           //给用户发送撤销的消息
-                                          that.sendMessageToAuthor(cancel)
+                                          // that.sendMessageToAuthor(cancel)
                                     },
                                     fail: err => {
                                           console.error(err)

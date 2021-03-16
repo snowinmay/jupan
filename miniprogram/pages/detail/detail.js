@@ -360,6 +360,6 @@ Page({
             }.bind(that), 1800);
       },
       onReady() {
-            this.kefuani();
+            // this.kefuani();
       }
 })

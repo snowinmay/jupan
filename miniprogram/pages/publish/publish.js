@@ -75,17 +75,6 @@ Page({
                   }],
             })
       },
-      dy(){
-        wx.requestSubscribeMessage({
-          tmplIds: ['7wC-_oB10pdLxwoZa3JGkgzKLdwudg9Y3fq7-m4GUsY'],
-          success (res) {
-            console.log(res)
-          },
-          fail(res){
-            console.log(res)
-          }
-        })
-      },
       onLoad() {
         let that = this
         this.initial();
@@ -93,11 +82,9 @@ Page({
            withSubscriptions: true,
            success(res) {
              console.log(res)
-             that.subscriptionsSettings = res.subscriptionsSetting.itemSettings
+             // that.subscriptionsSettings = res.subscriptionsSetting.itemSettings
            }
-         })
-
-            
+         })    
       },
       onShow(){
             console.log(app.userinfo)
@@ -489,7 +476,10 @@ Page({
             }else{
               cb()
             }      
-          })  
+          }).catch(err => {
+            // handle error
+            console.log(err)
+          })
       },
       //正式发布
       publish() {
@@ -598,7 +588,7 @@ Page({
         let subscribeIds = JSON.parse(config.data).subscribeIds
         console.log(subscribeIds)
         wx.requestSubscribeMessage({
-          tmplIds: [subscribeIds.activityStart,subscribeIds.goodsOn,subscribeIds.orderStatus],
+          tmplIds: [subscribeIds.goodsOn,subscribeIds.orderStatus],
           success (res) {
             console.log("success")
             console.log(res)
@@ -680,7 +670,7 @@ Page({
               console.log(o_res)
              wx.compressImage({
                 src: o_res.tempFilePaths[0], // 图片路径
-                quality: 30, // 压缩质量
+                quality: 10, // 压缩质量
                 success(c_res){
                   console.log(c_res)
                   that.imgCheck(c_res,function(){

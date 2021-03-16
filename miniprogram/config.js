@@ -41,9 +41,8 @@ var data = {
             // }
       ],
       subscribeIds:{
-            'activityStart':'Paxescjrb7D-nHphqurmSrUmQhStDmekjGHVNr_3r_k',
             'goodsOn':'oQU1_dIR318I7sOu-UhJkIM4WQMOP3tP6zx6ZMtdQIc',
-            'orderStatus':'GXr22RQxNU7C3SIpXWHS0ccbbeKZdl4Hq1nOmOz5hUo',
+            'orderStatus':'GXr22RQxNU7C3SIpXWHS0eFPqFN_13ff_RZxCDI-VuM',
       }
 }
 //下面的就别动了
