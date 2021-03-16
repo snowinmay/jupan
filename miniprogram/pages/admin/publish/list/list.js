@@ -127,7 +127,7 @@ Page({
                                           })
                                           that.getList();
                                           //给用户发送撤销的消息
-                                          // that.sendMessageToAuthor(cancel)
+                                          that.sendMessageToAuthor(cancel)
                                     },
                                     fail: err => {
                                           console.error(err)
